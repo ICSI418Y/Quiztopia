@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+quiztopia/node_modules
+Server/node_modules
+/.pnp
+.pnp.js
+
+# testing
+quiztopia/coverage
+
+# production
+quiztopia/build
+
+# misc
+quiztopia/.DS_Store
+quiztopia/.env.local
+quiztopia/.env.development.local
+quiztopia/.env.test.local
+quiztopia/.env.production.local
+
+quiztopia/npm-debug.log*
+quiztopia/yarn-debug.log*
+quiztopia/yarn-error.log*
