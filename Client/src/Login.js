@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 function Login() {
+  const navigate = useNavigate();
   // Intialize state for user input.
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -14,8 +16,20 @@ function Login() {
     setPassword("");
     setUserName("");
     axios.post('http://localhost:9000/getUser', loginValues)
+      .then((res) => {
+        if (res.data) {
+          // update local storage with new user
+          localStorage.clear()
+          localStorage.setItem('loggedInUser', res.data._id)
+          navigate("/Home");
+          alert('Login Successful')
+        }
+        else
+          alert('Wrong Credentials')
+      })
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
+    // TODO: navigate to signup/home page
   };
   return (<div>
     <h1>Login</h1>
