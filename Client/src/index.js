@@ -4,7 +4,8 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import Signup from './Signup';
+import SignUp from './SignUp';
+import Login from './Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -12,7 +13,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path = "/" element = {<App/>}/>
-      <Route path = "/signUp" element = {<Signup/>}/>
+      <Route path = "/signUp" element = {<SignUp/>}/>
+      <Route path = "/login" element = {<Login/>}/>
     </>
   )
 );

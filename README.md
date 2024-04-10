@@ -127,7 +127,7 @@ If everything is set up correctly, you should be able to call `npm start` from t
 
 ### quiztopia/
 
-We used the default packages provided by `npx create-react-app quiztopia`, as well as Bootstrap (imported with `npm i --save bootstrap`).
+We used the default packages provided by `npx create-react-app quiztopia`, as well as Bootstrap, Axios, and React Router Dom (imported with `npm i --save bootstrap axios react-router-dom`).
 
 ### Server/
 

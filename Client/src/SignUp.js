@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function Signup() {
+function SignUp() {
   // Intialize state for user input.
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -56,4 +56,4 @@ function Signup() {
   </div>)
 }
 
-export default Signup;
+export default SignUp;
