@@ -4,61 +4,6 @@
 
 # Implementation:
 
-## Note about client side pages:
-If you're page is conditionally renderd (only does something if the user is logger in).
-You should use the Template function, which automatically renders the content for you only if the user is logged in.
-
-### Documentation
-`function Template(title, content)`
-
-- title is the `h1` title at the beggining of the page.
-    An example would be `"login"`.
-- content is the html/react that should be condionally renderd.
-    An example would be `<div>content</div>`.
-
-### Usage:
-Without template:
-```jsx
-import React from "react";
-
-function YourPage() {
-    // see if use is logged in
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    // state management
-
-    return (<>
-        {LoggedInUser != null &&
-        <div>
-            <h1>Your Title</h1>
-            <p>Very important content that only logged in users can see.</p>
-        </div>}
-        {LoggedInUser == null &&
-        <div>
-            <h1>Your Title</h1>
-            <p>Only logged in user can see this content, please login to view this page.</p>
-        </div>
-        }
-    </>)
-}
-
-export default YourPage;
-```
-With template:
-```jsx
-import React from "react";
-
-function YourPage() {
-    // state management
-
-    return Template("Your Page",
-        <div>
-            <p>Very important content that only logged in users can see.</p>
-        </div>)
-}
-
-export default YourPage;
-```
-
 ## Data Structures and Database Calls (Danny):
 
 ## Tasks:
