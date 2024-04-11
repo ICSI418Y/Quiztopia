@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Template from "./Template";
 
@@ -8,12 +8,7 @@ function DeleteAccount() {
   // Intialize state for user input.
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
-  const loggedInUser = localStorage.getItem('loggedInUser')
 
-  // TODO: how should deletion work:
-  // 1. DeleteUser in server takes in username and password and deletes user if possible
-  // 2. first use GetUser to verify that this user owns this account, then do DeleteUser with users's id
-  // TODO: should deletion only work for the currently logged in user
   const handleDeleteAccount = (event) => {
     event.preventDefault();
     const deleteAccountValues = { userName, password };
@@ -27,8 +22,6 @@ function DeleteAccount() {
       .catch((_) => alert('Error in Account Deletion Up'));
   };
   return Template("Account deletion",
-    // TODO: use template
-    // for conditional rendering
     <div>
       <form>
         Please enter your username to verify it is you

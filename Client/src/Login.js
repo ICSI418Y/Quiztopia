@@ -29,7 +29,6 @@ function Login() {
       })
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
-    // TODO: navigate to signup/home page
   };
   return (<div>
     <h1>Login</h1>
