@@ -3,8 +3,9 @@ const cors = require('cors');
 const app = express();
 
 const User = require('./UserSchema.js');
-const CardSet = require('./CardSetSchema.js');
-const FlashCard = require('./FlashcardSchema.js');
+const Folder = require('./FolderSchema.js');
+const Set = require('./SetSchema.js');
+const Flashcard = require('./FlashcardSchema.js');
 const Class = require('./ClassSchema.js');
 
 

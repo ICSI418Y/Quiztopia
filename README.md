@@ -6,72 +6,15 @@
 
 ## Data Structures and Database Calls (Danny):
 
-### Schema:
-
-#### User
-Data:
-- `firstName : String` - The User's first name.
-- `lastName : String` - The User's last name.
-- `userName : String` - The User's username.
-- `password : String` - The User's password.
-- `flashcardFolders : FlashcardFolder` - The root folder containing the user's flashcard sets and folders.
-- `classes : [Class]` - A list of the user's classes.
-
-Database Calls:
-- `/getUser` - (req:{}, res{}) - UNIMPLEMENTED
-- `/createUser` - (req:{}, res{}) - UNIMPLEMENTED
-- `/deleteUser` - (req:{}, res{}) - UNIMPLEMENTED
-- `/___` - (req:{}, res{}) - UNIMPLEMENTED
-
-#### Flashcard Folder
-Data:
-- `parentFolder : FlashcardFolder` - The parent folder of this folder. If it is the root folder, store self.
-- `flashcardFolders: [FlashcardFolder]` - 
-- `flashcardSet : [flashcardSet]` - 
-
-Database Calls:
-- `/getFolder` - (req:{}, res{}) - UNIMPLEMENTED
-- `/createFolder` - (req:{}, res{}) - UNIMPLEMENTED
-- `/deleteFolder` - (req:{}, res{}) - UNIMPLEMENTED
-- `/___` - (req:{}, res{}) - UNIMPLEMENTED
-
-#### Class
-Data:
-- `flashcardFolder: FlashcardFolder` - 
-- `teachers : [User]` - 
-- `students : [User]` - 
-
-Database Calls:
-- `/getClass` - (req:{}, res{Class}) - UNIMPLEMENTED
-- `/addStudent` - (req:{}, res{}) - UNIMPLEMENTED
-- `/addTeacher` - (req:{}, res{}) - UNIMPLEMENTED
-- `/removeStudent` - (req:{}, res{}) - UNIMPLEMENTED
-- `/removeTeacher` - (req:{}, res{}) - UNIMPLEMENTED
-- `/___` - (req:{}, res{}) - UNIMPLEMENTED
-
-#### Flashcard Set
-Data:
-- `title : String` -
-- `description : String` - 
-- `flashcards : [Flashcard]` - 
-
-Database Calls:
-- `/___` - (req:{}, res{}) - UNIMPLEMENTED
-
-#### Flashcard
-Data:
-- `term : String` - The front of the flashcard.
-- `definition : String` - The back of the flashcard.
-- `profficiency : number` - //TODO: figure out how to map to each user.
-
-Database Calls:
-- `/___` - (req:{}, res{}) - UNIMPLEMENTED
+## Tasks:
+- Create the schema, and server calls, specified in `./Server/README.md`.
 
 ## Graphic Design and UI (Rusho):
 
 ### Tasks:
-- Create Mockups of pages, design a logo, and choose a color scheme
-- When other team members say that a page is done, work with them to make their created page conform to your mockups. (i.e. reorganize their working page to make it look pretty and cohesive with the other pages.)
+- Create the base router for our app.
+- Create mock-ups of pages, design a logo, and choose a color scheme
+- When other team members say that a page is done, work with them to make their created page conform to your mock-ups. (i.e. reorganize their working page to make it look pretty and cohesive with the other pages.)
 
 ## Flashcard Creation and Activities (Danica):
 
@@ -106,6 +49,7 @@ Database Calls:
 # Completed Pages:
 
 PAGE NAME | OWNER | FUNCTIONALITY DONE | USER AUTHENTICATION DONE | GRAPHIC DESIGN DONE |
+:--- | :---: | :---: |:---: |:---: |
 `/Signup` | Mendel | X | X | X |
 `/Login` | Mendel | X | X | X |
 `/DeleteAccount` | Mendel | X | X | X |
@@ -132,4 +76,5 @@ We used the default packages provided by `npx create-react-app quiztopia`, as we
 ### Server/
 
 We used the default packages provided by `npm init`, as well as the Express, Mongoose, NodeMON, dotenv, and cors (imported with the command `npm i --save express mongoose nodemon dotenv cors`).
+
 
