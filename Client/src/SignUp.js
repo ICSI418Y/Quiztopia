@@ -32,10 +32,7 @@ function SignUp() {
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <br />
       Please repeat your password
-      <br />
       <input type="password" value={passwordRepeat} onChange={(e) => setPasswordRepeat(e.target.value)} />
-      <br />
-      Passwords match
       {
         // Conditional rendering for password validation.
       }
