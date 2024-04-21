@@ -12,9 +12,9 @@
 ## Graphic Design and UI (Rusho):
 
 ### Tasks:
-- Create the base router for our app.
-- Create mock-ups of pages, design a logo, and choose a color scheme
-- When other team members say that a page is done, work with them to make their created page conform to your mock-ups. (i.e. reorganize their working page to make it look pretty and cohesive with the other pages.)
+- Create the base router for our app. - COMPLETED?
+- Create mock-ups of pages, design a logo, and choose a color scheme - COMPLETED
+- When other team members say that a page is done, work with them to make their created page conform to your mock-ups. (i.e. reorganize their working page to make it look pretty and cohesive with the other pages.) - IN PROGRESS
 
 ## Flashcard Creation and Activities (Danica):
 
