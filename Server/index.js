@@ -100,7 +100,7 @@ app.get('/getUsers', async (req, res) => {
     }
 })
 
-// - `/getUser` - `(req:{_id}, res{User})` - UNTESTED
+// - `/getUser` - `(req:{_id : User._id}, res{User})` - UNTESTED
 app.get('/getUser', async (req, res) => {
     try{
         const id = req.body._id;
@@ -123,7 +123,7 @@ app.get('/getUser', async (req, res) => {
     }
 })
 
-// - `/getUserByUsername` - `(req:{userName}, res{User})` - UNTESTED
+// - `/getUserByUsername` - `(req:{username : String}, res{User})` - UNTESTED
 app.get('/getUserByUsername', async (req, res) => {
     try{
         const username = req.body.username;
@@ -145,7 +145,7 @@ app.get('/getUserByUsername', async (req, res) => {
     }
 })
 
-// `/loginUser` - `(req:{username, password}, res{User})` - UNTESTED
+// `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
 app.get('/loginUser', async (req, res) => {
     try{
         const username = req.body.username;
@@ -168,7 +168,9 @@ app.delete('/deleteUser', async (req, res) =>{
         const _id = req.body._id;
         console.log("/deleteUser _id: " + _id);
 
-        await User.deleteOne({_id : _id});
+        const deletedUser = await User.deleteOne({_id : _id});
+
+        res.send(deletedUser);
     }
     catch(error){
         res.status().send(error);
@@ -177,10 +179,28 @@ app.delete('/deleteUser', async (req, res) =>{
 });
 
 
-// - `/createFolder` - `(req : {title : String, parent : Folder._id}, res{})` - UNIMPLEMENTED
+// - `/createFolder` - `(req : {title : String, parent : Folder._id}, res{folder : Folder})` - UNTESTED
+app.post('/createFolder', async (req, res) => {
+    try{
+        const title = req.body.title;
+        const parent = req.body.parent;
+        const children = [];
+        const sets = [];
+        console.log("/createFolder Title: " + title + " parent: " + parent);
+
+        const folder = new Folder(title, parent, children, sets);
+        await folder.save();
+
+        res.send(folder);
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
 
 // - `/getFolderByID` - `(req : {_id}, res : {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]})` - UNIMPLEMENTED
-app.get('', async (req, res) => {
+app.get('/getFolderByID', async (req, res) => {
     try{
         
     }
@@ -188,14 +208,45 @@ app.get('', async (req, res) => {
         res.status().send(error);
         console.log(error);
     }
-})
+});
 
 // - `/editChildren` - `(req : {_id, children [Folder._id]}, res {})` - UNIMPLEMENTED
 
 // - `/editSets` - `(req : {_id, sets [Set._id]}, res {})` - UNIMPLEMENTED
 
-// - `/deleteFolder` - `(req:{_id}, res{})` - UNIMPLEMENTED
+// - `/deleteFolder` - `(req:{_id}, res{})` - UNTESTED
 app.delete('/deleteFolder', async (req, res) =>{
+    try{
+        const id = req.body._id;
+        console.log("/deleteFolder _id: " + id);
+        
+        // Recursivly delete all children.
+        deleteFolder(id);
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
+async function deleteFolder(id){
+    const folder = await Folder.findById(id);
+    
+    for(const child of folder.children){
+        deleteFolder(child._id);
+    }
+
+    for(const set of folder.sets){
+        const set = await Set.findByIdAndDelete(set);
+
+        deleteSet(set._id);
+    }
+
+    await Folder.findByIdAndDelete(folder);
+}
+
+// - `/createClass` - `(req : {owner : User._id, teachers : [User._id], students : [User._id]}, res {})` - UNIMPLEMENTED
+app.post('/create', async (req, res) => {
     try{
 
     }
@@ -204,8 +255,6 @@ app.delete('/deleteFolder', async (req, res) =>{
         console.log(error);
     }
 });
-
-// - `/createClass` - `(req : {owner : User._id, teachers : [User._id], students : [User._id]}, res {})` - UNIMPLEMENTED
 
 // - `/getClass` - `(req : {}, res {})` - UNIMPLEMENTED
 app.get('', async (req, res) => {
@@ -234,11 +283,26 @@ app.delete('/deleteClass', async (req, res) =>{
 });
 
 // - `/createSet` - `(req:{title : String, description : String, flashcards : [Flashcard]}, res{})` - UNIMPLEMENTED
-
-// - `/getSet` - `(req:(Set._id), res(Set, [Flashcard]))` - UNIMPLEMENTED
-app.get('', async (req, res) => {
+app.post('/create', async (req, res) => {
     try{
-        
+
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
+// - `/getSet` - `(req:(id : Set._id), res(Set, [Flashcard]))` - UNTESTED
+app.get('/getSet', async (req, res) => {
+    try{
+        const id = req.body.id;
+
+        console.log("/getSet ID: " + id);
+
+        const set = await Set.findById(id);
+
+        res.send(set);
     }
     catch (error){
         res.status().send(error);
@@ -250,9 +314,18 @@ app.get('', async (req, res) => {
 
 // - `/editDescription` - `(req:{description : String}, res{})` - UNIMPLEMENTED
 
-// - `/editCards` - `(req:{oldCard : Flashcard._id, newCard : Flashcard}, res{})` - UNIMPLEMENTED
+// `/addCard` - `(req:{set : Set._id, term : String, definition : String}, res:{_id : Flashcard._id})` - UNIMPLEMENTED
+app.post('/addCard', async (req, res) => {
+    try{
 
-// - `/deleteSet` - `(req:{_id}, res{})` - UNIMPLEMENTED
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
+// `/remove card` = `(req:{set : Set._id, flashcard : Flashcard._id}, res{})`
 app.delete('/deleteSet', async (req, res) =>{
     try{
 
@@ -263,11 +336,40 @@ app.delete('/deleteSet', async (req, res) =>{
     }
 });
 
+// - `/deleteSet` - `(req:{id : Set._id}, res{})` - UNTESTED
+app.delete('/deleteSet', async (req, res) =>{
+    try{
+        const id = req.body.id;
+        console.log("/deleteSet id: " + id);
 
-// - `/getCard` - `(req:{card : Flashcard._id}, res{Flashcard})` - UNIMPLEMENTED
+        deleteSet(id);
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
+function deleteSet(id){
+
+    const set = Set.findById(id)
+
+    for(const card of set){
+        Flashcard.findByIdAndDelete(card._id);
+    }
+
+    Set.findByIdAndDelete(id);
+}
+
+
+// - `/getCard` - `(req:{id : Flashcard._id}, res{Flashcard})` - UNTESTED
 app.get('', async (req, res) => {
     try{
-        
+        const id = req.body.card;
+
+        const card = await Flashcard.findById(id);
+
+        res.send(card);
     }
     catch (error){
         res.status().send(error);
@@ -275,7 +377,7 @@ app.get('', async (req, res) => {
     }
 })
 
-// - `/editCard` - `(req:{term : String, definition : Stringt}, res{})` - UNIMPLEMENTED
+// - `/editCard` - `(req:{set : Set._id, term : String, definition : Stringt}, res{})` - UNIMPLEMENTED
 
 // - `/updateProfficiency` - `(req:{profficiency : Number}, res{})` - UNIMPLEMENTED
 
