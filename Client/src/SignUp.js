@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import './App.css';
 
 function SignUp() {
   // Intialize state for user input.
@@ -22,17 +23,17 @@ function SignUp() {
     axios.post('http://localhost:9000/createUser', signupValues)
       .catch((_) => alert('Error in Signing Up'));
   };
-  return (<div>
+  return (<div className="center background">
     <h1>Sign Up</h1>
     <form>
       Username
-      <input value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <input className="inputBoxSizes" value={userName} onChange={(e) => setUserName(e.target.value)} />
       <br />
       Password
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <br />
       Please repeat your password
-      <input type="password" value={passwordRepeat} onChange={(e) => setPasswordRepeat(e.target.value)} />
+      <input className="inputBoxSizes" type="password" value={passwordRepeat} onChange={(e) => setPasswordRepeat(e.target.value)} />
       {
         // Conditional rendering for password validation.
       }
@@ -44,12 +45,12 @@ function SignUp() {
       </>
       <br />
       First Name
-      <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+      <input className="inputBoxSizes" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
       <br />
       Last Name
-      <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+      <input className="inputBoxSizes" value={lastName} onChange={(e) => setLastName(e.target.value)} />
     </form>
-    <button disabled={!(userName && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} onClick={handleSignUp} type="submit">submit</button>
+    <button className="createAccountButtonSpacing" disabled={!(userName && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} onClick={handleSignUp} type="submit">submit</button>
   </div>)
 }
 

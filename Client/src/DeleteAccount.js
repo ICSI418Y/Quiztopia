@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Template from "./Template";
+import './App.css';
 
 function DeleteAccount() {
   const navigate = useNavigate();
@@ -22,15 +23,15 @@ function DeleteAccount() {
       .catch((_) => alert('Error in Account Deletion Up'));
   };
   return Template("Account deletion",
-    <div>
+    <div className="center background">
       <form>
         Please enter your username to verify it is you
-        <input value={userName} onChange={(e) => setUserName(e.target.value)} />
+        <input className="inputBoxSizes" value={userName} onChange={(e) => setUserName(e.target.value)} />
         <br />
         Please enter your password to verify it is you
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </form>
-      <button disabled={!(userName && password)}
+      <button className="loginButtonSpacing" disabled={!(userName && password)}
 
         onClick={(event) => {
           // prompt the user with yes or no question to see if they really want ot delete their account, only try to delete it if they say yes
