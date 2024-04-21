@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import './App.css';
 
 function Login() {
   const navigate = useNavigate();
@@ -30,17 +31,17 @@ function Login() {
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
   };
-  return (<div>
+  return (<div className="center background">
     <h1>Login</h1>
     <form>
       Username
-      <input value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <input className="inputBoxSizes" value={userName} onChange={(e) => setUserName(e.target.value)} />
       <br />
       Password
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <br />
     </form>
-    <button disabled={!(userName && password)} onClick={handleLogin} type="submit">submit</button>
+    <button className="loginButtonSpacing" disabled={!(userName && password)} onClick={handleLogin} type="submit">submit</button>
   </div>)
 }
 

@@ -7,16 +7,17 @@ import reportWebVitals from './reportWebVitals';
 import SignUp from './SignUp';
 import Login from './Login';
 import DeleteAccount from './DeleteAccount';
+import './App.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />} />
-      <Route path="/signUp" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/deleteAccount" element={<DeleteAccount />} />
+      <Route className="navbar-center" path="/" element={<App />} />
+      <Route className="navbar-center" path="/signUp" element={<SignUp />} />
+      <Route className="navbar-center" path="/login" element={<Login />} />
+      <Route className="navbar-center" path="/deleteAccount" element={<DeleteAccount />} />
     </>
   )
 );
