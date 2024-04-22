@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 Client/node_modules
 Server/node_modules
@@ -8,6 +6,7 @@ Server/node_modules
 
 # testing
 quiztopia/coverage
+Client/src/DBTest.js
 
 # production
 quiztopia/build
