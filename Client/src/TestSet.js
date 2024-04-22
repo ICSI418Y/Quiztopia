@@ -7,9 +7,6 @@ const PracticeTestSet = ({ flashcards }) => {
         const userDefinition = prompt(`Term: ${term}\nEnter Description:`);
         if (userDefinition && userDefinition.trim().toLowerCase() === correctDefinition.toLowerCase()) {
             setScore(score + 1);
-            alert('Correct!');
-        } else {
-            alert(`Incorrect. The correct description is: ${correctDefinition}`);
         }
     };
 
