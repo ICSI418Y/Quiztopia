@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import './index.css';
 import Select from 'react-select';
+import './App.css';
+
     const EditClass = () => {
         const [thisClass, setClass] = useState([])
         const [selectedTeachers, setSelectedTeachers] = useState([])
@@ -29,7 +31,7 @@ import Select from 'react-select';
             return {label: user.firstName + user.lastName, value: user._id}
         })
         return(
-            <div>
+            <div className="center background">
                 <label>Select Teachers To Add
                     <Select
                         isMulti
@@ -62,7 +64,7 @@ import Select from 'react-select';
                         onChange={setSelectedStudents(e)}
                     />
                 </label>
-                <button type="button" onClick={(event) => handleEditClass(event, selectedStudents, selectedTeachers)}>
+                <button className='loginButtonSpacing' type="button" onClick={(event) => handleEditClass(event, selectedStudents, selectedTeachers)}>
                         Create Class
                 </button>
                 <p>

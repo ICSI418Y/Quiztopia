@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import Template from "./Template";
 import axios from 'axios';
+import './App.css';
 
 const CreateCard = () => {
     const [term, setCardTerm] = useState('');
@@ -23,7 +24,7 @@ const CreateCard = () => {
     })
 
     return Template("Create Flash Card",
-        <form onSubmit={handleCreateCard}>
+        <form className='center background' onSubmit={handleCreateCard}>
             <label>
                 Term:
                 <input
@@ -59,7 +60,7 @@ const CreateCard = () => {
                 </select>
             </label>
             <div>
-                <button type="button" onClick={(event) => handleCreateCard(event)}>
+                <button className='loginButtonSpacing' type="button" onClick={(event) => handleCreateCard(event)}>
                 Add To Set
                 </button>
             </div>

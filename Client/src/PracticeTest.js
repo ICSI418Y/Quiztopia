@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 
 const PracticeTestSet = ({ flashcards }) => {
     const [score, setScore] = useState(0);
@@ -14,12 +15,12 @@ const PracticeTestSet = ({ flashcards }) => {
     };
 
     return (
-        <div>
+        <div className='class background'>
             <h1>Practice Test with Answer</h1>
             {flashcards.map((flashcard, index) => (
                 <div key={index}>
                     <p><strong>Term:</strong> {flashcard.term}</p>
-                    <button onClick={() => handleAnswer(flashcard.term, flashcard.definition)}>Submit Answer</button>
+                    <button className='loginButtonSpacing' onClick={() => handleAnswer(flashcard.term, flashcard.definition)}>Submit Answer</button>
                     <p><strong>Definition:</strong> {flashcard.definition}</p>
                 </div>
             ))}
