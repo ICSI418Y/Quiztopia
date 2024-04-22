@@ -17,18 +17,15 @@ function DeleteAccount() {
     setUsername("");
     axios.post('http://localhost:9000/loginUser', deleteAccountValues)
       .then(res => {
-        {
-          if (res.data) {
-            axios.post('http://localhost:9000/deleteUser', res.data._id).then(_ => {
-              localStorage.clear()
-              navigate("/Home");
-              alert('Account Deletion Successful')
-            })
-          }
-          else
-            alert('Wrong Credentials, could not delete acount')
+        if (res.data) {
+          axios.post('http://localhost:9000/deleteUser', res.data._id).then(_ => {
+            localStorage.clear()
+            navigate("/Home");
+            alert('Account Deletion Successful')
+          })
         }
-        navigate("/Home");
+        else
+          alert('Wrong Credentials, could not delete acount')
       })
       .catch((_) => alert('Error in Account Deletion Up'));
   };

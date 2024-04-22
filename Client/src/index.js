@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import DBTest from './DBTest.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
@@ -16,6 +15,10 @@ import TestSet from './TestSet';
 import PracticeTestSet from './TestSet';
 import ViewSet from './ViewCardSet';
 import ViewCardSet from './ViewSets';
+import CreateClass from './CreateClass';
+import ViewClass from './ViewClass';
+import EditClass from './EditClass';
+import ViewFolder from './ViewFolder';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -34,6 +37,10 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/viewCardSet/:setId" element={<ViewSet />} />
       <Route className="navbar-center" path="/viewCard
         Sets" element={<ViewCardSet />} />
+      <Route className="navbar-center" path="/createClass" element={<CreateClass />} />
+      <Route className="navbar-center" path="/editClass/:classId" element={<EditClass />} />
+      <Route className="navbar-center" path="/viewClass/:classId" element={<ViewClass />} />
+      <Route className="navbar-center" path="/viewFolder/:folderId" element={<ViewFolder />} />
     </>
   )
 );
