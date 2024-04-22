@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import Template from "./Template";
 import axios from 'axios';
 
 const CreateCard = () => {
@@ -21,9 +22,8 @@ const CreateCard = () => {
         axios.get('http:localhost:9000/getCardSets').then((res) => setCardSets(res.data))
     })
 
-    return (
+    return Template("Create Flash Card",
         <form onSubmit={handleCreateCard}>
-            <h1>Create Flash Card</h1>
             <label>
                 Term:
                 <input

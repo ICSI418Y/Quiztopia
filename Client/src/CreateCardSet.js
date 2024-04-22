@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Template from './Template';
 
 const CreateCardSet = () => {
     const [title, setTitle] = useState('');
@@ -14,9 +16,8 @@ const CreateCardSet = () => {
             .catch((err) => alert('Error creating set'));
     };
 
-    return (
+    return Template("Create Set",
         <form onSubmit={handleCreateSet}>
-            <h1>Create Set</h1>
             <label>
                 Title:
                 <input
@@ -29,9 +30,9 @@ const CreateCardSet = () => {
             <label>
                 Description:
                 <input
-                type="textvalue"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                    type="textvalue"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
             </label>
             <br />
