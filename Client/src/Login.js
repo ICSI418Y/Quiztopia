@@ -6,17 +6,17 @@ import './App.css';
 function Login() {
   const navigate = useNavigate();
   // Intialize state for user input.
-  const [userName, setUserName] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const handleLogin = (event) => {
     event.preventDefault();
     // TODO: does password hashing happen here or in "server"?
-    const loginValues = { userName, password };
+    const loginValues = { username: username, password };
     // Reset values, needed if user creates multiple accounts in successsion.
     setPassword("");
-    setUserName("");
-    axios.post('http://localhost:9000/getUser', loginValues)
+    setUsername("");
+    axios.post('http://localhost:9000/loginUser', loginValues)
       .then((res) => {
         if (res.data) {
           // update local storage with new user
@@ -35,13 +35,13 @@ function Login() {
     <h1>Login</h1>
     <form>
       Username
-      <input className="inputBoxSizes" value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <input className="inputBoxSizes" value={username} onChange={(e) => setUsername(e.target.value)} />
       <br />
       Password
       <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <br />
     </form>
-    <button className="loginButtonSpacing" disabled={!(userName && password)} onClick={handleLogin} type="submit">submit</button>
+    <button className="loginButtonSpacing" disabled={!(username && password)} onClick={handleLogin} type="submit">submit</button>
   </div>)
 }
 

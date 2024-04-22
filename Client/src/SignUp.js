@@ -6,18 +6,18 @@ function SignUp() {
   // Intialize state for user input.
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
-  const [userName, setUserName] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   // Used so that the user has to retype their password, in case they mistype it.
   const [passwordRepeat, setPasswordRepeat] = useState("")
 
   const handleSignUp = (event) => {
     event.preventDefault();
-    const signupValues = { firstName, lastName, userName, password };
+    const signupValues = { firstName, lastName, username: username, password };
     // Reset values, needed if user creates multiple accounts in successsion.
     setPassword("");
     setPasswordRepeat("");
-    setUserName("");
+    setUsername("");
     setFirstName("");
     setLastName("");
     axios.post('http://localhost:9000/createUser', signupValues)
@@ -27,7 +27,7 @@ function SignUp() {
     <h1>Sign Up</h1>
     <form>
       Username
-      <input className="inputBoxSizes" value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <input className="inputBoxSizes" value={username} onChange={(e) => setUsername(e.target.value)} />
       <br />
       Password
       <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -50,7 +50,7 @@ function SignUp() {
       Last Name
       <input className="inputBoxSizes" value={lastName} onChange={(e) => setLastName(e.target.value)} />
     </form>
-    <button className="createAccountButtonSpacing" disabled={!(userName && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} onClick={handleSignUp} type="submit">submit</button>
+    <button className="createAccountButtonSpacing" disabled={!(username && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} onClick={handleSignUp} type="submit">submit</button>
   </div>)
 }
 
