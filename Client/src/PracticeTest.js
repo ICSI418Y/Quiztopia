@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PracticeTestSetWithAnswer = ({ flashcards }) => {
+const PracticeTestSet = ({ flashcards }) => {
     const [score, setScore] = useState(0);
 
     const handleAnswer = (term, correctDefinition) => {
@@ -28,4 +28,4 @@ const PracticeTestSetWithAnswer = ({ flashcards }) => {
     );
 };
 
-export default PracticeTestSetWithAnswer;
+export default PracticeTestSet;
