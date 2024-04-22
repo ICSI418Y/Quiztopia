@@ -68,15 +68,15 @@ app.post('/createUser', async (req, res) => {
     }
 });
 
-// - `/getUsers` - `(req:{ids : [User._id]}, res{users : [User]})` - UNTESTED
+// - `/getUsers` - `(req:{userIDs : [User._id]}, res{userList : [User]})` - UNTESTED
 app.get('/getUsers', async (req, res) => {
     try{
-        const ids = req.body.ids;
-        console.log("/getUsers ids: " + ids);
+        const userIDs = req.body.userIDs;
+        console.log("/getUsers ids: " + userIDs);
 
         let userList = [];
 
-        for(const id of ids){
+        for(const id of userIDs){
             const user = await User.findById(id);
             userList.push({
                 firstName : user.firstName,
@@ -93,13 +93,13 @@ app.get('/getUsers', async (req, res) => {
     }
 })
 
-// - `/getUser` - `(req:{_id : User._id}, res{User})` - UNTESTED
+// - `/getUser` - `(req:{userID : User._id}, res{retUser : User})` - UNTESTED
 app.get('/getUser', async (req, res) => {
     try{
-        const id = req.body._id;
-        console.log("/getUser id: " + id);
+        const userID = req.body.userID;
+        console.log("/getUser id: " + userID);
 
-        const user = await User.findById(id);
+        const user = await User.findById(userID);
 
         let retUser = {
             firstName : user.firstName,
@@ -138,7 +138,7 @@ app.get('/getUserByUsername', async (req, res) => {
     }
 })
 
-// `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
+// - `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
 app.get('/loginUser', async (req, res) => {
     try{
         const username = req.body.username;
@@ -155,13 +155,13 @@ app.get('/loginUser', async (req, res) => {
     }
 })
 
-// - `/deleteUser` - `(req:{_id}, res{})` - UNTESTED 
+// - `/deleteUser` - `(req:{userID : User._id}, res{})` - UNTESTED
 app.delete('/deleteUser', async (req, res) =>{
     try{
-        const _id = req.body._id;
-        console.log("/deleteUser _id: " + _id);
+        const userID = req.body.userID;
+        console.log("/deleteUser id: " + userID);
 
-        const deletedUser = await User.deleteOne({_id : _id});
+        const deletedUser = await User.deleteOne({_id : userID});
 
         res.send(deletedUser);
     }
@@ -201,29 +201,13 @@ app.post('/createFolder', async (req, res) => {
     }
 });
 
-/**
- * Creates a root folder for a new User or Class.
- * 
- * @param {String} name 
- * @returns A new root folder, initialized correctly.
- */
-async function createRootFolder(name){
-    const title = name + "RootFolder";
-    const parent = null;
-    const children = [];
-    const sets = []
-    const newFolder = new Folder({title, parent, children, sets});
-            
-    return await newFolder.save();
-}
-
-// - `/getFolderByID` - `(req : {id : Folder._id}, res : {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]})` - UNTESTED
+// - `/getFolderByID` - `(req : {folderID : Folder._id}, res : {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]})` - UNTESTED
 app.get('/getFolderByID', async (req, res) => {
     try{
-        const id = req.body.id;
-        console.log("/getFolderByID id: " + id);
+        const folderID = req.body.folderID;
+        console.log("/getFolderByID id: " + folderID);
 
-        const folder = await Folder.findById(id);
+        const folder = await Folder.findById(folderID);
 
         const parentFolder = await Folder.findById(folder.parent);
 
@@ -361,29 +345,6 @@ app.delete('/deleteFolder', async (req, res) =>{
     }
 });
 
-/**
- * UNTESTED: Recursivly deletes all child folders, and sets of a given folder.
- * 
- * @param {Folder._id} id 
- */
-async function deleteFolder(id){
-    const folder = await Folder.findById(id);
-    
-    // delete children
-    for(const child of folder.children){
-        deleteFolder(child._id);
-    }
-
-    // Delete sets
-    for(const set of folder.sets){
-        const set = await Set.findByIdAndDelete(set);
-
-        deleteSet(set._id);
-    }
-
-    // Delete from DB
-    await Folder.findByIdAndDelete(folder);
-}
 
 // - `/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
 app.post('/createClass', async (req, res) => {
@@ -661,7 +622,7 @@ app.patch('/editSet', async (req, res) =>{
     }
 });
 
-// `/addCard` - `(req:{set : Set._id, term : String, definition : String}, res:{_id : Flashcard._id})` - UNTESTED
+// `/addCard` - `(req:{setID : Set._id, term : String, definition : String}, res:{_id : Flashcard._id})` - UNTESTED
 app.post('/addCard', async (req, res) => {
     try{
         const setID = req.body.setID;
@@ -709,34 +670,19 @@ app.delete('/removeCard', async (req, res) =>{
     }
 });
 
-// - `/deleteSet` - `(req:{id : Set._id}, res{})` - UNTESTED
+// - `/deleteSet` - `(req:{setID : Set._id}, res{})` - UNTESTED
 app.delete('/deleteSet', async (req, res) =>{
     try{
-        const id = req.body.id;
-        console.log("/deleteSet id: " + id);
+        const setID = req.body.setID;
+        console.log("/deleteSet id: " + setID);
 
-        deleteSet(id);
+        deleteSet(setID);
     }
     catch(error){
         res.status().send(error);
         console.log(error);
     }
 });
-
-/**
- * UNTESTED: Deletes the passed set and all flashcards within the set.
- * @param {Set._id} id 
- */
-function deleteSet(id){
-
-    const set = Set.findById(id)
-
-    for(const card of set){
-        Flashcard.findByIdAndDelete(card._id);
-    }
-
-    Set.findByIdAndDelete(id);
-}
 
 
 // - `/getCard` - `(req:{cardID : Flashcard._id}, res{Flashcard})` - UNTESTED
@@ -793,3 +739,61 @@ app.patch('/updateProfficiency', async (req, res) =>{
         console.log(error);
     }
 });
+
+
+// Helper Methods:
+
+/**
+ * Creates a root folder for a new User or Class.
+ * 
+ * @param {String} name 
+ * @returns A new root folder, initialized correctly.
+ */
+async function createRootFolder(name){
+    const title = name + "RootFolder";
+    const parent = null;
+    const children = [];
+    const sets = []
+    const newFolder = new Folder({title, parent, children, sets});
+            
+    return await newFolder.save();
+}
+
+/**
+ * UNTESTED: Recursivly deletes all child folders, and sets of a given folder.
+ * 
+ * @param {Folder._id} id 
+ */
+async function deleteFolder(id){
+    const folder = await Folder.findById(id);
+    
+    // delete children
+    for(const child of folder.children){
+        deleteFolder(child._id);
+    }
+
+    // Delete sets
+    for(const set of folder.sets){
+        const set = await Set.findByIdAndDelete(set);
+
+        deleteSet(set._id);
+    }
+
+    // Delete from DB
+    await Folder.findByIdAndDelete(folder);
+}
+
+/**
+ * UNTESTED: Deletes the passed set and all flashcards within the set.
+ * @param {Set._id} id 
+ */
+function deleteSet(id){
+
+    const set = Set.findById(id)
+
+    for(const card of set){
+        Flashcard.findByIdAndDelete(card._id);
+    }
+
+    Set.findByIdAndDelete(id);
+}
