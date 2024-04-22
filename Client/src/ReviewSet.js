@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './App.css';
 
 const ReviewSet = ({ sets }) => {
     const { setId } = useParams();
@@ -16,7 +17,7 @@ const ReviewSet = ({ sets }) => {
             [currentCard._id]: e.target.value
         });
     };
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
     const handleNextCard = () => {
         if (currentCardIndex < set.flashcards.length - 1) {
             setCurrentCardIndex(currentCardIndex + 1);
@@ -64,10 +65,10 @@ const ReviewSet = ({ sets }) => {
     };
 
     return (
-        <div>
+        <div className='center background'>
             <h1>Review Set: {set.title}</h1>
             <p>{set.description}</p>
-            <div>
+            <div className='center background'>
                 <p>{currentCard.term}</p>
                 {!showDescription ? (
                     <div>
@@ -79,18 +80,18 @@ const ReviewSet = ({ sets }) => {
                                 onChange={handleDescriptionChange}
                             />
                         </label>
-                        <button onClick={handleCorrectDescription}>Correct Description</button>
-                        <button onClick={handleNextCard}>Next Card</button>
-                        <button onClick={handleShowDescription}>Show Description</button>
+                        <button className='loginButtonSpacing' onClick={handleCorrectDescription}>Correct Description</button>
+                        <button className='loginButtonSpacing' onClick={handleNextCard}>Next Card</button>
+                        <button className='loginButtonSpacing' onClick={handleShowDescription}>Show Description</button>
                     </div>
                 ) : (
                     <div>
                         <p>Correct Description: {currentCard.definition}</p>
-                        <button onClick={handleSkipCard}>Skip Card</button>
+                        <button className='loginButtonSpacing' onClick={handleSkipCard}>Skip Card</button>
                     </div>
                 )}
             </div>
-            <button onClick={handleReset}>Restart</button>
+            <button className='loginButtonSpacing' onClick={handleReset}>Restart</button>
         </div>
     );
 };

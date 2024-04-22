@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import './index.css';
 import Select from 'react-select';
+import './App.css';
+
     const CreateClass = () => {
         const [owner, setOwner] = useState([])
         const [selectedTeachers, setSelectedTeachers] = useState([])
@@ -20,7 +22,7 @@ import Select from 'react-select';
             return {label: user.firstName + user.lastName, value: user._id}
             })
         return(
-            <div>
+            <div className="center background">
                 <select onChange={(e) => setOwner(e.target.value)} value={owner}>
                     <option value="">Select Owner of Class</option>
                         {users.map((user, index) => {
@@ -46,7 +48,7 @@ import Select from 'react-select';
                         onChange={setSelectedStudents(e)}
                     />
                 </label>
-                <button type="button" onClick={(event) => handleCreateClass(event, owner, selectedStudents, selectedTeachers)}>
+                <button className='loginButtonSpacing' type="button" onClick={(event) => handleCreateClass(event, owner, selectedStudents, selectedTeachers)}>
                         Create Class
                 </button>
             </div>

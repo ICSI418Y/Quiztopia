@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ObjectId } from 'mongoose';
+import './App.css';
 
 const generateId = () => {
     return new ObjectId().toString();
@@ -29,7 +30,7 @@ const ViewSet = ({ sets, addCardToSet }) => {
 
 
     return (
-        <div>
+        <div className='cneter background'>
             <h1>{set.title}</h1>
             <p>{set.description}</p>
             <h2>Cards</h2>
@@ -49,9 +50,9 @@ const ViewSet = ({ sets, addCardToSet }) => {
                 Definition:
                 <input type="text" value={definition} onChange={(e) => setDefinition(e.target.value)} />
             </label>
-            <button onClick={handleAddCard}>Add Card</button>
+            <button className='loginButtonSpacing' onClick={handleAddCard}>Add Card</button>
             <br />
-            <button onClick={(e) => <Link to ="/ReviewSet"></Link>}>Review Set</button>
+            <button className='loginButtonSpacing' onClick={(e) => <Link to ="/ReviewSet"></Link>}>Review Set</button>
         </div>
     );
 };

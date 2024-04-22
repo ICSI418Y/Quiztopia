@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Template from './Template';
+import './App.css';
 
 const CreateCardSet = () => {
     const [title, setTitle] = useState('');
@@ -17,7 +18,7 @@ const CreateCardSet = () => {
     };
 
     return Template("Create Set",
-        <form onSubmit={handleCreateSet}>
+        <form className='center background' onSubmit={handleCreateSet}>
             <label>
                 Title:
                 <input
@@ -36,7 +37,7 @@ const CreateCardSet = () => {
                 />
             </label>
             <br />
-            <button type="submit" onClick={(e) => <Link to={'/ViewCardSet/${set._id'}>{set.title}</Link>}>Create Set</button>
+            <button className='loginButtonSpacing' type="submit" onClick={(e) => <Link to={'/ViewCardSet/${set._id'}>{set.title}</Link>}>Create Set</button>
         </form>
     );
 };

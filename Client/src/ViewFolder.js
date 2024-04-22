@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import './index.css';
+import './App.css';
+
     const ViewFolder = () => {
         const[folder,setFolder] = useState([])
         const[currentFolder_id,setcurrentFolder_id] = useState([])
@@ -25,12 +27,12 @@ import './index.css';
             })
         }
     return(
-        <div>
+        <div className="center background">
             <h1>{folder.title}</h1>
             <label>Input desired folder's id
                 <input type="text" value={currentFolder_id} onChange={(e) => setcurrentFolder_id(e.target.value)}/>
             </label>
-            <button onClick={handleGetFolder}>Get Folder</button>
+            <button className='loginButtonSpacing' onClick={handleGetFolder}>Get Folder</button>
             <label>Switch view to child folder
                 <select onChange={(e) => setFolder(e.target.value)} value={folder}>
                     <option value="">Select Folder</option>
@@ -47,7 +49,7 @@ import './index.css';
                     <input type="text" value={folderName} onChange={(e) => setfolderName(e.target.value)}/>
                 </label>
             </label>
-            <button type="button" onClick={(event) => handleCreateFolder(event, folderName, folder._id)}>
+            <button className='loginButtonSpacing' type="button" onClick={(event) => handleCreateFolder(event, folderName, folder._id)}>
                     Create Folder
             </button>
             <select onChange={(e) => setfolderDelete_id(e.target.value)} value={folderDelete_id}>
@@ -59,7 +61,7 @@ import './index.css';
                     })
                     }
                 </select>
-            <button type="button" onClick={(event) => handleDeleteFolder(event, folderDelete_id)}>
+            <button className='loginButtonSpacing' type="button" onClick={(event) => handleDeleteFolder(event, folderDelete_id)}>
                 Delete Folder
             </button>
             <select onChange={(e) => setSelectedSets(e.target.value)} value={selectedSets}>
@@ -71,7 +73,7 @@ import './index.css';
                 })
                 }
             </select>
-            <button onClick={(e) => <Link to ="/ViewSet"></Link>}>ViewSet</button>  
+            <button className='loginButtonSpacing' onClick={(e) => <Link to ="/ViewSet"></Link>}>ViewSet</button>  
         </div>
     )
 }

@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import './index.css';
+import './App.css';
+
     const ViewClass = () => {
         const [thisClass, setClass] = useState([])
         const [studentRoster, setStudentRoster] = useState([])
@@ -23,7 +25,7 @@ import './index.css';
             teacherNames[i] = name
         }
         return(
-            <form>
+            <form className="center background">
                 <div>
                     Names of teachers in class: {this.props.teacherNames.map(txt => <p>{txt}</p>)}
                 </div>

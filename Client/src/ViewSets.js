@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
 
 const ViewCardSet= () => {
     const [CardSets, setCardSets] = useState([]);
@@ -17,8 +18,8 @@ const ViewCardSet= () => {
     }, []);
 
     return (
-        <form>
-            <div>
+        <form className='center background'>
+            <div className='center background'>
                 <h1>Flash Card Sets</h1>
                 <ul>
                     {CardSets.map((sets) => (
