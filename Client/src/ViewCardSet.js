@@ -29,11 +29,11 @@ const ViewSet = ({ sets, setSets }) => {
 
 
     return (
-        <div className='cneter background'>
+        <div className='background'>
             <h1>{set.title}</h1>
             <p>{set.description}</p>
             <h2>Cards</h2>
-            <ul>
+            <ul className='center'>
                 {set.flashcards.map((card) => (
                     <li key={card._id}>
                         <strong>Term:</strong> {card.term}, <strong>Definition:</strong> {card.definition}

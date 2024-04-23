@@ -28,13 +28,13 @@ const ViewFolder = () => {
         })
     }
     return (
-        <div className="center background">
+        <div className="background">
             <h1>{folder.title}</h1>
-            <label>Input desired folder's id
+            <label className="center">Input desired folder's id
                 <input type="text" value={currentFolder_id} onChange={(e) => setcurrentFolder_id(e.target.value)} />
             </label>
             <button className='loginButtonSpacing' onClick={handleGetFolder}>Get Folder</button>
-            <label>Switch view to child folder
+            <label className="center">Switch view to child folder
                 <select onChange={(e) => setFolder(e.target.value)} value={folder}>
                     <option value="">Select Folder</option>
                     {folder.children.map((folder, index) => {
@@ -45,7 +45,7 @@ const ViewFolder = () => {
                     }
                 </select>
             </label>
-            <label>Create new child folder
+            <label className="center">Create new child folder
                 <label>Name of folder
                     <input type="text" value={folderName} onChange={(e) => setfolderName(e.target.value)} />
                 </label>

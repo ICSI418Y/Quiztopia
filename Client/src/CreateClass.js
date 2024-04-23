@@ -22,7 +22,7 @@ import './App.css';
             return {label: user.firstName + user.lastName, value: user._id}
             })
         return(
-            <div className="center background">
+            <div className="background">
                 <select onChange={(e) => setOwner(e.target.value)} value={owner}>
                     <option value="">Select Owner of Class</option>
                         {users.map((user, index) => {
@@ -32,7 +32,7 @@ import './App.css';
                     })
                     }
                 </select>
-                <label>Select Teachers
+                <label className="center">Select Teachers
                     <Select
                         isMulti
                         options={userOptions}
@@ -40,7 +40,7 @@ import './App.css';
                         onChange={setSelectedTeachers(e)}
                     />
                 </label>
-                <label>Select Students
+                <label className="center">Select Students
                     <Select
                         isMulti
                         options={userOptions}

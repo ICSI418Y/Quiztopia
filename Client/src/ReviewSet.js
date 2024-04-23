@@ -65,13 +65,13 @@ const ReviewSet = ({ sets }) => {
     };
 
     return (
-        <div className='center background'>
+        <div className='background'>
             <h1>Review Set: {set.title}</h1>
             <p>{set.description}</p>
-            <div className='center background'>
+            <div className='center'>
                 <p>{currentCard.term}</p>
                 {!showDescription ? (
-                    <div>
+                    <div className='center'>
                         <label>
                             Description:
                             <input
@@ -85,7 +85,7 @@ const ReviewSet = ({ sets }) => {
                         <button className='loginButtonSpacing' onClick={handleShowDescription}>Show Description</button>
                     </div>
                 ) : (
-                    <div>
+                    <div className='center'>
                         <p>Correct Description: {currentCard.definition}</p>
                         <button className='loginButtonSpacing' onClick={handleSkipCard}>Skip Card</button>
                     </div>
