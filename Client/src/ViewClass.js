@@ -26,11 +26,11 @@ const ViewClass = () => {
         teacherNames[i] = name
     }
     return (
-        <form className="center background">
-            <div>
+        <form className="background">
+            <div className="center">
                 Names of teachers in class: {this.props.teacherNames.map(txt => <p>{txt}</p>)}
             </div>
-            <div>
+            <div className="center">
                 Names of students in class: {this.props.studentNamesNames.map(txt => <p>{txt}</p>)}
             </div>
             <p>

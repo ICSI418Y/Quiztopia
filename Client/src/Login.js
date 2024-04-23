@@ -31,9 +31,9 @@ function Login() {
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
   };
-  return (<div className="center background">
+  return (<div className="background">
     <h1>Login</h1>
-    <form>
+    <form className="center">
       Username
       <input className="inputBoxSizes" value={username} onChange={(e) => {setUsername(e.target.value)}} />
       <br />

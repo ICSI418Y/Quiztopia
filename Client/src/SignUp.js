@@ -23,9 +23,9 @@ function SignUp() {
     axios.post('http://localhost:9000/createUser', signupValues)
       .catch((_) => alert('Error in Signing Up'));
   };
-  return (<div className="center background">
+  return (<div className="background">
     <h1>Sign Up</h1>
-    <form>
+    <form className="center">
       Username
       <input className="inputBoxSizes" value={username} onChange={(e) => setUsername(e.target.value)} />
       <br />

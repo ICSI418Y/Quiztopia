@@ -32,8 +32,8 @@ const EditClass = () => {
         return { label: user.firstName + user.lastName, value: user._id }
     })
     return (
-        <div className="center background">
-            <label>Select Teachers To Add
+        <div className="background">
+            <label className="center">Select Teachers To Add
                 <Select
                     isMulti
                     options={userOptions}
@@ -41,7 +41,7 @@ const EditClass = () => {
                     onChange={setSelectedTeachers(e)}
                 />
             </label>
-            <label>Select Students To Add
+            <label className="center">Select Students To Add
                 <Select
                     isMulti
                     options={userOptions}
@@ -49,7 +49,7 @@ const EditClass = () => {
                     onChange={setSelectedStudents(e)}
                 />
             </label>
-            <label>Select Teachers To Remove
+            <label className="center">Select Teachers To Remove
                 <Select
                     isMulti
                     options={teacherOptions}
@@ -57,7 +57,7 @@ const EditClass = () => {
                     onChange={setSelectedTeachers(e)}
                 />
             </label>
-            <label>Select Students To Remove
+            <label className="center">Select Students To Remove
                 <Select
                     isMulti
                     options={studentOptions}

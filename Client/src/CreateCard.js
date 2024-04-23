@@ -24,8 +24,8 @@ const CreateCard = () => {
     })
 
     return Template("Create Flash Card",
-        <form className='center background' onSubmit={handleCreateCard}>
-            <label>
+        <form className='background' onSubmit={handleCreateCard}>
+            <label className='center'>
                 Term:
                 <input
                 type="text"
@@ -34,7 +34,7 @@ const CreateCard = () => {
                 />
             </label>
             <br />
-            <label>
+            <label className='center'>
                 Definition:
                 <input
                 type="text"
@@ -43,7 +43,7 @@ const CreateCard = () => {
                 />
             </label>
             <br />
-            <label>
+            <label className='center'>
                 Profficiency Level:
                 <input
                     type="text"
@@ -52,7 +52,7 @@ const CreateCard = () => {
                     />
             </label>
             <br />
-            <label>
+            <label className='center'>
                 Flash Card Sets:
                 <select onChange={(e) => setCardSet(e.target.value)} value = {set_id}>
                     {cardSets.map((set) =>

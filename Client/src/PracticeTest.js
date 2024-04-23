@@ -15,10 +15,10 @@ const PracticeTestSet = ({ flashcards }) => {
     };
 
     return (
-        <div className='class background'>
+        <div className='background'>
             <h1>Practice Test with Answer</h1>
             {flashcards.map((flashcard, index) => (
-                <div key={index}>
+                <div className='center' key={index}>
                     <p><strong>Term:</strong> {flashcard.term}</p>
                     <button className='loginButtonSpacing' onClick={() => handleAnswer(flashcard.term, flashcard.definition)}>Submit Answer</button>
                     <p><strong>Definition:</strong> {flashcard.definition}</p>
