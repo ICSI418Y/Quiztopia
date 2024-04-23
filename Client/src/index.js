@@ -20,6 +20,7 @@ import CreateClass from './CreateClass';
 import ViewClass from './ViewClass';
 import EditClass from './EditClass';
 import ViewFolder from './ViewFolder';
+import CreateFolder from './CreateFolder';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -32,7 +33,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/login" element={<Login />} />
       <Route className="navbar-center" path="/deleteAccount" element={<DeleteAccount />} />
       <Route className="navbar-center" path="/createCard" element={<CreateCard />} />
-      <Route className="navbar-center" path="/createCardSet" element={<CreateCardSet />} />
+      <Route className="navbar-center" path="/createCardSet/:folderID" element={<CreateCardSet />} />
       <Route className="navbar-center" path="/reviewSet" element={<ReviewSet />} />
       <Route className="navbar-center" path="/testSet" element={<TestSet />} />
       <Route className="navbar-center" path="/practiceTest" element={<PracticeTestSet />} />
@@ -41,7 +42,8 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/createClass" element={<CreateClass />} />
       <Route className="navbar-center" path="/editClass/:classId" element={<EditClass />} />
       <Route className="navbar-center" path="/viewClass/:classId" element={<ViewClass />} />
-      <Route className="navbar-center" path="/viewFolder/:folderId" element={<ViewFolder />} />
+      <Route className="navbar-center" path="/viewFolder/:folderID" element={<ViewFolder />} />
+      <Route className="navbar-center" path="/createFolder/:folderID" element={<CreateFolder/>}/>
     </>
   )
 );
