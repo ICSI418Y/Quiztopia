@@ -33,6 +33,7 @@ database.once('connected', () => console.log('Database Connected'))
  * @param lastName The last name of the new user.
  * @param username The username of the new user.
  * @param password The password for the new user.
+ * @returns The newly created User.
  */
 app.post('/createUser', async (req, res) => {
     try{
@@ -138,7 +139,15 @@ app.get('/getUserByUsername', async (req, res) => {
     }
 })
 
-// - `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
+/**
+ * /loginUser
+ * 
+ * Takes a username and password and returns the specified user if the correct password is given.
+ * 
+ * @param username The username of the desired User.
+ * @param password The password attempt for the desired User.
+ * @returns The specified user.
+ */
 app.post('/loginUser', async (req, res) => {
     try{
         const username = req.body.username;
@@ -155,7 +164,13 @@ app.post('/loginUser', async (req, res) => {
     }
 })
 
-// - `/deleteUser` - `(req:{userID : User._id}, res{})` - UNTESTED
+/**
+ * /deleteUser
+ * 
+ * Takes a User._id and deletes the specifed User.
+ * 
+ * @param userID The User._id of the user to be deleted.
+ */
 app.post('/deleteUser', async (req, res) =>{
     try{
         const userID = req.body.userID;
