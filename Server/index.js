@@ -156,7 +156,7 @@ app.post('/loginUser', async (req, res) => {
 })
 
 // - `/deleteUser` - `(req:{userID : User._id}, res{})` - UNTESTED
-app.delete('/deleteUser', async (req, res) =>{
+app.post('/deleteUser', async (req, res) =>{
     try{
         const userID = req.body.userID;
         console.log("/deleteUser id: " + userID);
