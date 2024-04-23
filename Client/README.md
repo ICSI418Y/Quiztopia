@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Note about client side pages:
-If you're page is conditionally renderd (only does something if the user is logger in).
+If you're page is conditionally rendered (only does something if the user is logger in).
 You should use the Template function, which automatically renders the content for you only if the user is logged in.
 
 ### Documentation
@@ -11,7 +11,7 @@ You should use the Template function, which automatically renders the content fo
 
 - title is the `h1` title at the beggining of the page.
     An example would be `"login"`.
-- content is the html/react that should be condionally renderd.
+- content is the html/react that should be condionally rendered.
     An example would be `<div>content</div>`.
 
 ### Usage:
