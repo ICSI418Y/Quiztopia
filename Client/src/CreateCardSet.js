@@ -18,8 +18,8 @@ const CreateCardSet = () => {
     };
 
     return Template("Create Set",
-        <form className='center background' onSubmit={handleCreateSet}>
-            <label>
+        <form className='background' onSubmit={handleCreateSet}>
+            <label className='center'>
                 Title:
                 <input
                     type="text"
@@ -28,7 +28,7 @@ const CreateCardSet = () => {
                 />
             </label>
             <br />
-            <label>
+            <label className='center'>
                 Description:
                 <input
                     type="textvalue"

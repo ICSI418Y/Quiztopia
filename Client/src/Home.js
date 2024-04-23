@@ -7,11 +7,11 @@ import './App.css';
 function Home(){
 
     return(
-        <div className='center background navbar-center'>
+        <div className='background navbar-center'>
           <h1>
             Welcome to Quiztopia!!!
           </h1>
-          <body>
+          <body className='center'>
             <Link to="/Login">Login</Link>
             <Link to="/Signup">Signup</Link>
             <Link to="/ViewFolder">View Folders</Link>

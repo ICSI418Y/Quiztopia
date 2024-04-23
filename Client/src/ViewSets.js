@@ -18,8 +18,8 @@ const ViewCardSet= () => {
     }, []);
 
     return (
-        <form className='center background'>
-            <div className='center background'>
+        <form className='background'>
+            <div className='center'>
                 <h1>Flash Card Sets</h1>
                 <ul>
                     {CardSets.map((sets) => (

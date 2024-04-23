@@ -31,8 +31,8 @@ function DeleteAccount() {
       .catch((_) => alert('Error in Account Deletion Up'));
   };
   return Template("Account deletion",
-    <div className="center background">
-      <form>
+    <div className="background">
+      <form className="center">
         Please enter your username to verify it is you
         <input className="inputBoxSizes" value={username} onChange={(e) => setUsername(e.target.value)} />
         <br />
