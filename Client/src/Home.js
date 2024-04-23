@@ -22,6 +22,10 @@ function Home(){
         })
     }, []);
 
+    const handleLogout = (event) =>{
+      event.preventDefault();
+    }
+
     return(
         <div className='background'>
           <h1>
@@ -35,6 +39,7 @@ function Home(){
             }
 
           </body>
+          <button onClick={(handleLogout)}>Logout</button>
         </div>
     );
 }
