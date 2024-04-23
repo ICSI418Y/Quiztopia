@@ -139,6 +139,31 @@ app.get('/getUserByUsername', async (req, res) => {
     }
 })
 
+// - `/searchUserByLastName` - `(req:{lastName : String}, res{users : [User]})` - UNTESTED
+app.get('/searchUserByLastName', async (req, res) => {
+    try{
+        const lastName = req.body.lastName;
+        console.log("/searchUserByLastName LN: " + lastName);
+
+        const users = User.find({lastName : lastName});
+        let retUsers = [];
+        for(const user of users){
+            retUsers.push({
+                firstName : user.firstName,
+                lastName : user.lastName,
+                username : user.username,
+                _id : user._id
+            })
+        }
+
+        res.send(retUsers)
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
 /**
  * /loginUser
  * 
