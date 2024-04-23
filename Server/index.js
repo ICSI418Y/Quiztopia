@@ -216,44 +216,56 @@ app.post('/deleteUser', async (req, res) =>{
 app.post('/createFolder', async (req, res) => {
     try{
         const title = req.body.title;
-        const parentID = req.body.parentID;
+        const parentID = req.body.parentID.substring(0, 24);
         console.log("/createFolder Title: " + title + " parent: " + parentID);
 
         const children = [];
         const sets = [];
         
-        const folder = new Folder(title, parentID, children, sets);
+        const folder = new Folder({title, parentID, children, sets});
         await folder.save();
 
         // Add to parent folder.
-        const parent = Folder.findById(parentID);
+        const parent = await Folder.findById(parentID);
+
         let oldChildren = parent.children;
         oldChildren.push(folder._id);
-        await folder.findByIdAndUpdate(parentID, {
+        await Folder.findByIdAndUpdate(parentID, {
             children : oldChildren
         })
 
         res.send(folder);
     }
     catch(error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
 
-// - `/getFolderByID` - `(req : {folderID : Folder._id}, res : {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]})` - UNTESTED
-app.get('/getFolderByID', async (req, res) => {
+/**
+ * /getFolderByID
+ * 
+ * Returns a folder based on the passed folder._id.
+ * 
+ * @param folderID The folder ID to aquire.
+ * @returns {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]}
+ */
+app.post('/getFolderByID', async (req, res) => {
     try{
-        const folderID = req.body.folderID;
+        // Substring because someone is adding random '}'s to the end of the ID.
+        const folderID = req.body.folderID.substring(0, 24);
         console.log("/getFolderByID id: " + folderID);
 
         const folder = await Folder.findById(folderID);
 
         const parentFolder = await Folder.findById(folder.parent);
 
-        let parent = {
-            title : parentFolder.title,
-            _id : folder.parent
+        let parent = null;
+        if (parentFolder != null){
+            parent = {
+                title : parentFolder.title,
+                _id : folder.parent
+            }
         }
 
         let children = [];
@@ -286,7 +298,7 @@ app.get('/getFolderByID', async (req, res) => {
         res.send(retFolder);
     }
     catch (error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
