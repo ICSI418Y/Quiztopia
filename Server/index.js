@@ -222,15 +222,17 @@ app.post('/createFolder', async (req, res) => {
         const children = [];
         const sets = [];
         
-        const folder = new Folder({title, parentID, children, sets});
+        const folder = new Folder({title : title, parentID : parentID, children, sets});
         await folder.save();
 
         // Add to parent folder.
         const parent = await Folder.findById(parentID);
 
+        console.log(parent);
+
         let oldChildren = parent.children;
         oldChildren.push(folder._id);
-        await Folder.findByIdAndUpdate(parentID, {
+        await Folder.findByIdAndUpdate(parent._id, {
             children : oldChildren
         })
 
@@ -252,6 +254,7 @@ app.post('/createFolder', async (req, res) => {
  */
 app.post('/getFolderByID', async (req, res) => {
     try{
+        console.log
         // Substring because someone is adding random '}'s to the end of the ID.
         const folderID = req.body.folderID.substring(0, 24);
         console.log("/getFolderByID id: " + folderID);
@@ -264,7 +267,7 @@ app.post('/getFolderByID', async (req, res) => {
         if (parentFolder != null){
             parent = {
                 title : parentFolder.title,
-                _id : folder.parent
+                _id : parentFolder.parent
             }
         }
 
@@ -294,7 +297,7 @@ app.post('/getFolderByID', async (req, res) => {
             children : children,
             sets : sets
         }
-
+        console.log(retFolder);
         res.send(retFolder);
     }
     catch (error){

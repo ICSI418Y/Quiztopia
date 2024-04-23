@@ -1,16 +1,20 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom';
+import {React, useState, useEffect} from "react";
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import './index.css';
 import './App.css';
 
 const ViewFolder = () => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState("");
     const [parentID, setParentID] = useState('');
     const [parentTitle, setParentTitle] = useState("");
     const [children, setChildren] = useState([]);
     const [sets, setSets] = useState([]);
-    
+
+   
+
     const { folderID } = useParams();
 
     useEffect(() =>{
@@ -37,9 +41,30 @@ const ViewFolder = () => {
     }
 
     const handleDeleteFolder = (event, folder_id) => {
-        event.preventDefault()
-        axios.post('http://localhost:9000/deleteFolder', { folder_id })
-            .catch((err) => alert('Error in Deleting Folder'))
+        //event.preventDefault()
+        axios.post('http://localhost:9000/deleteFolder', { deletedID: folder_id })
+            .catch((err) => alert('Error in Deleting Folder: ' + err));
+    }
+
+    const switchFolder = (childID) => {
+        //event.preventDefault()
+
+        navigate(`/viewFolder/${childID}`);
+
+        axios.post('http://localhost:9000/getFolderByID', { folderID: childID })
+        .then((res) => {
+            setTitle(res.data.title);
+            if (res.data.parent){
+                setParentID(res.data.parent._id);
+                setParentTitle(res.data.parent.title);
+            }
+            
+            setChildren(res.data.children);
+            setSets(res.data.sets);
+        })
+        .catch((err) => {
+            alert("ERROR: " + err);
+        })
     }
 
     return (
@@ -52,7 +77,7 @@ const ViewFolder = () => {
               {children.map((child) => {
                 return (
                   <li>
-                    <Link to={`/viewFolder/${child._id}`}>{child.title}</Link>
+                    <button onClick={() => switchFolder(child._id)}> {child.title} </button>
                     <button onClick={() => handleDeleteFolder(child._id)}> Delete </button>
                   </li>
                 );
