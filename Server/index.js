@@ -47,7 +47,7 @@ app.post('/createUser', async (req, res) => {
         const testUsername = await User.findOne({username : username});
 
         if (testUsername == null){            
-            const rootFolder = createRootFolder(username)
+            const rootFolder = await createRootFolder(username)
 
             // Make empty classes array
             const classes = [];
@@ -139,11 +139,11 @@ app.get('/getUserByUsername', async (req, res) => {
 })
 
 // - `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
-app.get('/loginUser', async (req, res) => {
+app.post('/loginUser', async (req, res) => {
     try{
         const username = req.body.username;
-        const password = req.body.password
-        console.log("/getUserByName UN: " + username + " PW: " + password);
+        const password = req.body.password;
+        console.log("/loginUser UN: " + username + " PW: " + password);
 
         const user = await User.findOne({username : username, password : password});
 
@@ -754,9 +754,10 @@ async function createRootFolder(name){
     const parent = null;
     const children = [];
     const sets = []
+
     const newFolder = new Folder({title, parent, children, sets});
-            
-    return await newFolder.save();
+    const root = await newFolder.save();
+    return root;
 }
 
 /**

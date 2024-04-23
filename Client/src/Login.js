@@ -12,7 +12,7 @@ function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
     // TODO: does password hashing happen here or in "server"?
-    const loginValues = { username: username, password };
+    const loginValues = { username: username, password : password};
     // Reset values, needed if user creates multiple accounts in successsion.
     setPassword("");
     setUsername("");
@@ -35,10 +35,10 @@ function Login() {
     <h1>Login</h1>
     <form>
       Username
-      <input className="inputBoxSizes" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <input className="inputBoxSizes" value={username} onChange={(e) => {setUsername(e.target.value)}} />
       <br />
       Password
-      <input className="inputBoxSizes" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input className="inputBoxSizes" type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
       <br />
     </form>
     <button className="loginButtonSpacing" disabled={!(username && password)} onClick={handleLogin} type="submit">submit</button>
