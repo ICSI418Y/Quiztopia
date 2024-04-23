@@ -4,6 +4,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
 import DeleteAccount from './DeleteAccount';
@@ -25,7 +26,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route className="navbar-center" path="/" element={<App />} />
+      <Route className="navbar-center" path="/" element={<Home />} />
+      <Route className="navbar-center" path="/home" element={<Home />} />
       <Route className="navbar-center" path="/signUp" element={<SignUp />} />
       <Route className="navbar-center" path="/login" element={<Login />} />
       <Route className="navbar-center" path="/deleteAccount" element={<DeleteAccount />} />
@@ -35,8 +37,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/testSet" element={<TestSet />} />
       <Route className="navbar-center" path="/practiceTest" element={<PracticeTestSet />} />
       <Route className="navbar-center" path="/viewCardSet/:setId" element={<ViewSet />} />
-      <Route className="navbar-center" path="/viewCard
-        Sets" element={<ViewCardSet />} />
+      <Route className="navbar-center" path="/viewCardSets" element={<ViewCardSet />} />
       <Route className="navbar-center" path="/createClass" element={<CreateClass />} />
       <Route className="navbar-center" path="/editClass/:classId" element={<EditClass />} />
       <Route className="navbar-center" path="/viewClass/:classId" element={<ViewClass />} />
