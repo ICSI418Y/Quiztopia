@@ -95,21 +95,21 @@ app.get('/getUsers', async (req, res) => {
 })
 
 // - `/getUser` - `(req:{userID : User._id}, res{retUser : User})` - UNTESTED
-app.get('/getUser', async (req, res) => {
+app.post('/getUser', async (req, res) => {
     try{
         const userID = req.body.userID;
         console.log("/getUser id: " + userID);
 
         const user = await User.findById(userID);
 
-        let retUser = {
-            firstName : user.firstName,
-            lastName : user.lastName,
-            username : user.username,
-            _id : user._id
-        }
+        // let retUser = {
+        //     firstName : user.firstName,
+        //     lastName : user.lastName,
+        //     username : user.username,
+        //     _id : user._id
+        // }
 
-        res.send(retUser);
+        res.send(user);
     }
     catch (error){
         res.status().send(error);
