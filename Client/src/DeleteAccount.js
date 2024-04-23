@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {React, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Template from "./Template";
@@ -18,7 +18,8 @@ function DeleteAccount() {
     axios.post('http://localhost:9000/loginUser', deleteAccountValues)
       .then(res => {
         if (res.data) {
-          axios.post('http://localhost:9000/deleteUser', res.data._id).then(_ => {
+          const userID = res.data._id;
+          axios.post('http://localhost:9000/deleteUser', {userID}).then(_ => {
             localStorage.clear()
             navigate("/Home");
             alert('Account Deletion Successful')

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ObjectId } from 'mongoose';
+import { useParams, Link } from 'react-router-dom';
 import './App.css';
 
-const generateId = () => {
-    return new ObjectId().toString();
-};
+// const generateId = () => {
+//     return new ObjectId().toString();
+// };
 
-const ViewSet = ({ sets, addCardToSet }) => {
+const ViewSet = ({ sets, setSets }) => {
     const { setId } = useParams();
     const set = sets.find((set) => set._id === parseInt(setId));
     const [term, setTerm] = useState('');
@@ -16,7 +15,7 @@ const ViewSet = ({ sets, addCardToSet }) => {
     const addCardToSet = (setId, term, definition) => {
         const setIndex = sets.findIndex((set) => set._id === setId);
         if (setIndex !== -1) {
-            const newCard = { _id: generateId(), term, definition, profficiency: 0 };
+            const newCard = { term, definition, profficiency: 0 };
             sets[setIndex].flashcards.push(newCard);
             setSets([...sets]);
         }

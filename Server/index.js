@@ -33,6 +33,7 @@ database.once('connected', () => console.log('Database Connected'))
  * @param lastName The last name of the new user.
  * @param username The username of the new user.
  * @param password The password for the new user.
+ * @returns The newly created User.
  */
 app.post('/createUser', async (req, res) => {
     try{
@@ -47,7 +48,7 @@ app.post('/createUser', async (req, res) => {
         const testUsername = await User.findOne({username : username});
 
         if (testUsername == null){            
-            const rootFolder = createRootFolder(username)
+            const rootFolder = await createRootFolder(username)
 
             // Make empty classes array
             const classes = [];
@@ -138,12 +139,45 @@ app.get('/getUserByUsername', async (req, res) => {
     }
 })
 
-// - `/loginUser` - `(req:{username : String, password : String}, res{User})` - UNTESTED
-app.get('/loginUser', async (req, res) => {
+// - `/searchUserByLastName` - `(req:{lastName : String}, res{users : [User]})` - UNTESTED
+app.get('/searchUserByLastName', async (req, res) => {
+    try{
+        const lastName = req.body.lastName;
+        console.log("/searchUserByLastName LN: " + lastName);
+
+        const users = User.find({lastName : lastName});
+        let retUsers = [];
+        for(const user of users){
+            retUsers.push({
+                firstName : user.firstName,
+                lastName : user.lastName,
+                username : user.username,
+                _id : user._id
+            })
+        }
+
+        res.send(retUsers)
+    }
+    catch(error){
+        res.status().send(error);
+        console.log(error);
+    }
+});
+
+/**
+ * /loginUser
+ * 
+ * Takes a username and password and returns the specified user if the correct password is given.
+ * 
+ * @param username The username of the desired User.
+ * @param password The password attempt for the desired User.
+ * @returns The specified user.
+ */
+app.post('/loginUser', async (req, res) => {
     try{
         const username = req.body.username;
-        const password = req.body.password
-        console.log("/getUserByName UN: " + username + " PW: " + password);
+        const password = req.body.password;
+        console.log("/loginUser UN: " + username + " PW: " + password);
 
         const user = await User.findOne({username : username, password : password});
 
@@ -155,8 +189,14 @@ app.get('/loginUser', async (req, res) => {
     }
 })
 
-// - `/deleteUser` - `(req:{userID : User._id}, res{})` - UNTESTED
-app.delete('/deleteUser', async (req, res) =>{
+/**
+ * /deleteUser
+ * 
+ * Takes a User._id and deletes the specifed User.
+ * 
+ * @param userID The User._id of the user to be deleted.
+ */
+app.post('/deleteUser', async (req, res) =>{
     try{
         const userID = req.body.userID;
         console.log("/deleteUser id: " + userID);
@@ -754,9 +794,10 @@ async function createRootFolder(name){
     const parent = null;
     const children = [];
     const sets = []
+
     const newFolder = new Folder({title, parent, children, sets});
-            
-    return await newFolder.save();
+    const root = await newFolder.save();
+    return root;
 }
 
 /**
