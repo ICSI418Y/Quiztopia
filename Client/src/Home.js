@@ -23,11 +23,11 @@ function Home(){
     }, []);
 
     return(
-        <div className='background navbar-center'>
+        <div className='background'>
           <h1>
             Welcome{loggedInUser !=null && `, ${username}`} to Quiztopia!!!
           </h1>
-          <body>
+          <body className='navbar-center'>
             <Link to="/Login">Login </Link>
             <Link to="/Signup">Signup </Link>
             { loggedInUser != null &&
