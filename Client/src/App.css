@@ -47,16 +47,13 @@
 }
 
 .background {
-  background: linear-gradient(to right, #d896ff 50%, #efbbff 50%);
+  height: 100vh;
+  background: linear-gradient(to top, #d896ff 25%, #efbbff 50%);
 }
 
 .inputBoxSizes {
   padding-right: 5px;
   padding-bottom: 6px;
-}
-
-.loginButtonSpacing {
-  margin-left: 25px;
 }
 
 .signupButtonSpacing {
