@@ -13,8 +13,6 @@ const ViewFolder = () => {
     const [children, setChildren] = useState([]);
     const [sets, setSets] = useState([]);
 
-   
-
     const { folderID } = useParams();
 
     useEffect(() =>{

@@ -16,7 +16,7 @@ function ViewSet(){
     const { setID } = useParams();
 
     useEffect(()=>{
-        axios.get('http://localhost:9000/getSet', {setID: setID})
+        axios.get('http://localhost:9000/getSet', {setID})
         .then((res) => {
             setSet(res.data.set);
             setFlashcards(res.data.flashcards)
@@ -46,7 +46,7 @@ function ViewSet(){
         <div className='background'>
             <h1>{set.title}</h1>
             <p>{set.description}</p>
-            <h2>Cards</h2>
+            <h2>Cards <Link to="/home">Home</Link></h2>
             <ul className='center'>
                 {flashcards.map((card) => (
                     <li key={card._id}>
