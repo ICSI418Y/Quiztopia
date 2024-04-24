@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Template from './Template';
-import './App.css';
+import './CreateCardSet.css';
 
 const CreateCardSet = () => {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [flashCards, setFlashcards] = useState([]);
+    const [set_id, setId] = useState('');
 
     const {folderID} = useParams();
 
@@ -15,33 +16,43 @@ const CreateCardSet = () => {
         event.preventDefault();
         setFlashcards([]);
         axios.post('http://localhost:9000/createSet', { parent : folderID, title, description })
-            .then(() => {
+            .then((res) => {
+                const newSetId = res.data._id
+                setId(newSetId);
+            
             alert('Set created successfully')
             })
             .catch((err) => alert('Error creating set'));
+            navigate('/viewCardSet/${set_id}');
     };
 
-    return Template("Create Set",
-        <form className='background' onSubmit={(event) => handleCreateSet(event)}>
-            <label className='center'>
-                Title:
+    return (
+        
+        <form className='CreateCardSet' onSubmit={(event) => handleCreateSet(event)}>
+            <h1>Create Set</h1>
+            <div className='title'>
+            <label>
+                Title: 
                 <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
             </label>
+            </div>
             <br />
-            <label className='center'>
-                Description:
+            <div className='desc'>
+            <label>
+                Description: 
                 <input
                     type="textvalue"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </label>
-            <br />
-            <button className='loginButtonSpacing' onClick={(e) => <Link to ="/CreateCard/${set._id}"></Link>}>Create Set</button>
+            </div>
+            <button>Create Set</button>
+            
         </form>
     );
 };
