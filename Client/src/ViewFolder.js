@@ -1,6 +1,6 @@
 import axios from "axios";
 import {React, useState, useEffect} from "react";
-import { Link, useParams,useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './index.css';
 import './App.css';
 
@@ -12,8 +12,6 @@ const ViewFolder = () => {
     const [parentTitle, setParentTitle] = useState("");
     const [children, setChildren] = useState([]);
     const [sets, setSets] = useState([]);
-
-   
 
     const { folderID } = useParams();
 
@@ -96,7 +94,7 @@ const ViewFolder = () => {
               {sets.map((set) => {
                 return (
                   <li>
-                    <Link to={`/viewSet/${set._id}`}>{set.title}</Link>
+                    <Link to={`/viewCardSet/${set._id}`}>{set.title}</Link>
                   </li>
                 );
               })

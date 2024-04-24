@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 
 // const generateId = () => {
 //     return new ObjectId().toString();
 // };
 
-const ViewSet = ({ sets, setSets }) => {
-    const { setId } = useParams();
-    const set = sets.find((set) => set._id === parseInt(setId));
+function ViewSet(){
+    const [set, setSet] = useState("");
+    const [flashcards, setFlashcards] = useState([]);
     const [term, setTerm] = useState('');
     const [definition, setDefinition] = useState('');
+    
+    const { setID } = useParams();
 
-    const addCardToSet = (setId, term, definition) => {
-        const setIndex = sets.findIndex((set) => set._id === setId);
-        if (setIndex !== -1) {
-            const newCard = { term, definition, profficiency: 0 };
-            sets[setIndex].flashcards.push(newCard);
-            setSets([...sets]);
-        }
-    };
+    useEffect(()=>{
+        axios.get('http://localhost:9000/getSet', {setID})
+        .then((res) => {
+            setSet(res.data.set);
+            setFlashcards(res.data.flashcards)
+        })
+        .catch((err) =>{
+            alert("Error getting set: " + err);
+        })
+    }, [])
 
     const handleAddCard = () => {
-        addCardToSet(setId, term, definition);
+        axios.post('http://localhost:9000/addCard', {setID, term, definition})
+        .then((res) => {
+            if(res.data){
+                alert("Great Success");
+            }
+        })
+        .catch((err) => {
+            alert("Error adding card: " + err);
+        })
+
         setTerm('');
         setDefinition('');
     };
@@ -32,9 +46,9 @@ const ViewSet = ({ sets, setSets }) => {
         <div className='background'>
             <h1>{set.title}</h1>
             <p>{set.description}</p>
-            <h2>Cards</h2>
+            <h2>Cards <Link to="/home">Home</Link></h2>
             <ul className='center'>
-                {set.flashcards.map((card) => (
+                {flashcards.map((card) => (
                     <li key={card._id}>
                         <strong>Term:</strong> {card.term}, <strong>Definition:</strong> {card.definition}
                     </li>
@@ -54,6 +68,6 @@ const ViewSet = ({ sets, setSets }) => {
             <button className='loginButtonSpacing' onClick={(e) => <Link to ="/ReviewSet"></Link>}>Review Set</button>
         </div>
     );
-};
+}
 
 export default ViewSet;
