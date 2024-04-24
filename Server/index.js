@@ -648,10 +648,11 @@ app.post('/createSet', async (req, res) => {
     }
 });
 
-// - `/getSet` - `(req:(id : Set._id), res(Set : Set, flashcards : [Flashcard]))` - UNTESTED
+// - `/getSet` - `(req:(setID : Set._id), res(Set : Set, flashcards : [Flashcard]))` - UNTESTED
 app.get('/getSet', async (req, res) => {
     try{
-        const id = req.body.id;
+        console.log(req.body);
+        const id = req.body.setID;
 
         console.log("/getSet ID: " + id);
 
@@ -667,7 +668,7 @@ app.get('/getSet', async (req, res) => {
         res.send({set: set, flashcards : flashcards});
     }
     catch (error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 })
