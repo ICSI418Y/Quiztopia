@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import './App.css';
+import { useNavigate } from "react-router";
 
 function SignUp() {
+  const navigate = useNavigate();
   // Intialize state for user input.
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -21,7 +23,16 @@ function SignUp() {
     setFirstName("");
     setLastName("");
     axios.post('http://localhost:9000/createUser', signupValues)
+      .then((res) => {
+        if (res.data){
+
+          alert("Great success!")
+          navigate('/login');
+        }
+      })
       .catch((_) => alert('Error in Signing Up'));
+
+    
   };
   return (<div className="background">
     <h1>Sign Up</h1>

@@ -38,7 +38,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/testSet" element={<TestSet />} />
       <Route className="navbar-center" path="/practiceTest" element={<PracticeTestSet />} />
       <Route className="navbar-center" path="/viewCardSet/:setId" element={<ViewSet />} />
-      <Route className="navbar-center" path="/viewCardSets" element={<ViewCardSet />} />
+      <Route className="navbar-center" path="/viewCardSets/:folderID" element={<ViewCardSet />} />
       <Route className="navbar-center" path="/createClass" element={<CreateClass />} />
       <Route className="navbar-center" path="/editClass/:classId" element={<EditClass />} />
       <Route className="navbar-center" path="/viewClass/:classId" element={<ViewClass />} />
