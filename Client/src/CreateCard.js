@@ -3,25 +3,22 @@ import Template from "./Template";
 import axios from 'axios';
 import './App.css';
 
-const CreateCard = () => {
+const CreateCard = (set_id) => {
     const [term, setCardTerm] = useState('');
     const [definition, setCardDef] = useState('');
     const [proficiency, setProficiency] = useState(0);
     const [cardSets, setCardSets] = useState([]);
-    const [set_id, setCardSet] = useState('');
     
     const handleCreateCard = (event) => {
         event.preventDefault();
 
         setProficiency(0); // New cards always start with a profficiency of 0
 
-        axios.post('http://localhost:9000/createCard', { term, definition, proficiency, set_id})
+        axios.post('http://localhost:9000/addCard', { term, definition, proficiency, set_id })
             .catch((err) => alert('Error in Create Flash Card'))
     };
 
-    useEffect(() => {
-        axios.get('http:localhost:9000/getCardSets').then((res) => setCardSets(res.data))
-    })
+
 
     return Template("Create Flash Card",
         <form className='background' onSubmit={handleCreateCard}>
@@ -54,10 +51,7 @@ const CreateCard = () => {
             <br />
             <label className='center'>
                 Flash Card Sets:
-                <select onChange={(e) => setCardSet(e.target.value)} value = {set_id}>
-                    {cardSets.map((set) =>
-                    <option value = {set._id}>{set.title}</option>)}
-                </select>
+                
             </label>
             <div>
                 <button className='loginButtonSpacing' type="button" onClick={(event) => handleCreateCard(event)}>

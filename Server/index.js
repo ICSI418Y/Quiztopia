@@ -100,19 +100,29 @@ app.post('/getUser', async (req, res) => {
         const userID = req.body.userID;
         console.log("/getUser id: " + userID);
 
-        const user = await User.findById(userID);
+        const retUser = await User.findById(userID);
 
-        // let retUser = {
-        //     firstName : user.firstName,
-        //     lastName : user.lastName,
-        //     username : user.username,
-        //     _id : user._id
-        // }
+        let classes = [];
+        for(const classs of retUser.classes){
+            classes.push({
+                title : classs,
+                _id : classs._id
+            })
+        }
+
+        let user = {
+            firstName : retUser.firstName,
+            lastName : retUser.lastName,
+            username : retUser.username,
+            folder : retUser.folder,
+            classes : classes,
+            _id : retUser._id
+        }
 
         res.send(user);
     }
     catch (error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 })
@@ -221,12 +231,12 @@ app.post('/createFolder', async (req, res) => {
 
         const children = [];
         const sets = [];
-        
-        const folder = new Folder({title : title, parentID : parentID, children, sets});
-        await folder.save();
 
         // Add to parent folder.
         const parent = await Folder.findById(parentID);
+        
+        const folder = new Folder({title : title, parent : parent._id, children, sets});
+        await folder.save();        
 
         console.log(parent);
 
@@ -267,7 +277,7 @@ app.post('/getFolderByID', async (req, res) => {
         if (parentFolder != null){
             parent = {
                 title : parentFolder.title,
-                _id : parentFolder.parent
+                _id : parentFolder._id
             }
         }
 
@@ -297,7 +307,7 @@ app.post('/getFolderByID', async (req, res) => {
             children : children,
             sets : sets
         }
-        console.log(retFolder);
+        //console.log(retFolder);
         res.send(retFolder);
     }
     catch (error){
@@ -375,13 +385,15 @@ app.patch('/moveSet', async (req, res) =>{
 });
 
 // - `/deleteFolder` - `(req:{deletedID : Folder._id}, res{})` - UNTESTED
-app.delete('/deleteFolder', async (req, res) =>{
+app.post('/deleteFolder', async (req, res) =>{
     try{
         const deletedID = req.body.deletedID;
         console.log("/deleteFolder deleted: " + deletedID);
         
-        const deleted = Folder.findById(deletedID);
-        const parent = Folder.findById(deleted.parent);
+        const deleted = await Folder.findById(deletedID);
+        const parent = await Folder.findById(deleted.parent);
+
+        console.log(parent);
 
         let children = parent.children;
         const index = children.indexOf(deletedID);
@@ -391,11 +403,13 @@ app.delete('/deleteFolder', async (req, res) =>{
             children : children
         })
 
+        console.log(parent);
+
         // Recursivly delete all children.
         deleteFolder(deletedID);
     }
     catch(error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
@@ -603,22 +617,24 @@ app.delete('/deleteClass', async (req, res) =>{
 });
 
 
-// - `/createSet` - `(req:{parent : Folder._id, title : String, description : String, flashcards : [Flashcard]}, res{})` - UNTESTED
+// - `/createSet` - `(req:{parent : Folder._id, title : String, description : String}, res{})` - UNTESTED
 app.post('/createSet', async (req, res) => {
     try{
+        console.log(req.body)
         const parentID = req.body.parent;
         const title = req.body.title;
         const description = req.body.description;
-        const flashcards = req.body.flashcards;
-        console.log("/createSet Parent: " + parentID + " Title: " + title + " Desc: " + description + " Flashcards: " + flashcards);
+        console.log("/createSet Parent: " + parentID + " Title: " + title + " Desc: " + description);
 
-        const set = new Set(title, description, flashcards);
+        const flashcards = [];
+
+        const set = new Set({title, description, flashcards});
         set.save();
 
         // Add to folder.
         const parent = await Folder.findById(parentID);
         let sets = parent.sets;
-        sets.put(set);
+        sets.push(set);
 
         await Folder.findByIdAndUpdate(parentID, {
             sets : sets
@@ -627,7 +643,7 @@ app.post('/createSet', async (req, res) => {
         res.send(set);
     }
     catch(error){
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
@@ -684,7 +700,7 @@ app.post('/addCard', async (req, res) => {
         const term = req.body.term;
         const definition = req.body.definition;
         const profficiency = 0;
-        console.log("/addCard SetID: " +setID+ " Term : " +  term + " Def: " + deffinition);
+        console.log("/addCard SetID: " +setID+ " Term : " +  term + " Def: " + definition);
 
         const flashcard = new Flashcard(term, definition, profficiency);
         await flashcard.save();

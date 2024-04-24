@@ -40,7 +40,7 @@ const ViewFolder = () => {
             .catch((err) => alert('Error in Creating Folder'))
     }
 
-    const handleDeleteFolder = (event, folder_id) => {
+    const handleDeleteFolder = (folder_id) => {
         //event.preventDefault()
         axios.post('http://localhost:9000/deleteFolder', { deletedID: folder_id })
             .catch((err) => alert('Error in Deleting Folder: ' + err));
@@ -69,9 +69,15 @@ const ViewFolder = () => {
 
     return (
         <div className="background">
-            <h1>{parentID != null && <Link to={`/viewFolder/${parentID}`}>{parentTitle}</Link>} {">"} {title}</h1>
+            <h1>{
+                    parentID != null && <button onClick={() => switchFolder(parentID)}> {parentTitle} </button>
+                } 
+                {
+                    parentID == null && <Link to="/home">Home</Link>
+                }
+                {">"} {title}</h1>
             <label className="center">
-                Folders: <Link to={`/createFolder/${folderID}`}>Create Folder</Link>
+                Folders: <Link to={`/createFolder/${folderID}`}>Create New Folder</Link>
             </label>
             <ul>
               {children.map((child) => {
@@ -84,7 +90,7 @@ const ViewFolder = () => {
               })}
             </ul>
             <label>
-                Sets:
+                Sets: <Link to={`/createCardSet/${folderID}`}>Create New Set</Link>
             </label>
             <ul>
               {sets.map((set) => {
