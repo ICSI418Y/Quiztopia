@@ -16,6 +16,7 @@ function Login() {
     // Reset values, needed if user creates multiple accounts in successsion.
     setPassword("");
     setUsername("");
+    // TODO: should this be a get
     axios.post('http://localhost:9000/loginUser', loginValues)
       .then((res) => {
         if (res.data) {

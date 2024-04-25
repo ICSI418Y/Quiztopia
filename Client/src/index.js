@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/deleteAccount" element={<DeleteAccount />} />
       <Route className="navbar-center" path="/createCard" element={<CreateCard />} />
       <Route className="navbar-center" path="/createCardSet/:folderID" element={<CreateCardSet />} />
-      <Route className="navbar-center" path="/reviewSet" element={<ReviewSet />} />
+      <Route className="navbar-center" path="/reviewSet/:setID" element={<ReviewSet />} />
       <Route className="navbar-center" path="/testSet" element={<TestSet />} />
       <Route className="navbar-center" path="/practiceTest" element={<PracticeTestSet />} />
       <Route className="navbar-center" path="/viewCardSet/:setID" element={<ViewSet />} />

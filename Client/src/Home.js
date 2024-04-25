@@ -39,7 +39,7 @@ function Home(){
             <Link to="/Login">Login </Link>
             <Link to="/Signup">Signup </Link>
             { loggedInUser != null &&
-              <Link to={`/ViewFolder/${folder}}`}>View Folders </Link>
+              <Link to={`/ViewFolder/${folder}`}>View Folders </Link>
             }
             {classes.map((classs) => {
               <Link to={`/viewClass/${classs._id}`}>{classs.title}</Link>

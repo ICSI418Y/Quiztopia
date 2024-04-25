@@ -36,7 +36,7 @@ database.once('connected', () => console.log('Database Connected'))
  * @returns The newly created User.
  */
 app.post('/createUser', async (req, res) => {
-    try{
+    try {
         // Get info
         const firstName = req.body.firstName;
         const lastName = req.body.lastName;
@@ -45,16 +45,16 @@ app.post('/createUser', async (req, res) => {
         console.log("/createUser FN:" + firstName + " LN:" + lastName + " ID:" + username + " PW:" + password);
 
         // Check that there isn't another user with the same username
-        const testUsername = await User.findOne({username : username});
+        const testUsername = await User.findOne({ username: username });
 
-        if (testUsername == null){            
+        if (testUsername == null) {
             const rootFolder = await createRootFolder(username)
 
             // Make empty classes array
             const classes = [];
 
             // Make the new user, and return result.
-            const user = new User({firstName, lastName, username, password, folder : rootFolder._id, classes});
+            const user = new User({ firstName, lastName, username, password, folder: rootFolder._id, classes });
             await user.save()
             res.send(user);
         }
@@ -63,7 +63,7 @@ app.post('/createUser', async (req, res) => {
             console.log("ERROR: Username: \"" + username + "\" already exists.");
         }
     }
-    catch(error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
@@ -71,24 +71,24 @@ app.post('/createUser', async (req, res) => {
 
 // - `/getUsers` - `(req:{userIDs : [User._id]}, res{userList : [User]})` - UNTESTED
 app.get('/getUsers', async (req, res) => {
-    try{
+    try {
         const userIDs = req.body.userIDs;
         console.log("/getUsers ids: " + userIDs);
 
         let userList = [];
 
-        for(const id of userIDs){
+        for (const id of userIDs) {
             const user = await User.findById(id);
             userList.push({
-                firstName : user.firstName,
-                lastName : user.lastName,
-                username : user.username,
-                _id : user._id
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                _id: user._id
             });
         }
         res.send(userList);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -96,32 +96,32 @@ app.get('/getUsers', async (req, res) => {
 
 // - `/getUser` - `(req:{userID : User._id}, res{retUser : User})` - UNTESTED
 app.post('/getUser', async (req, res) => {
-    try{
+    try {
         const userID = req.body.userID;
         console.log("/getUser id: " + userID);
 
         const retUser = await User.findById(userID);
 
         let classes = [];
-        for(const classs of retUser.classes){
+        for (const classs of retUser.classes) {
             classes.push({
-                title : classs,
-                _id : classs._id
+                title: classs,
+                _id: classs._id
             })
         }
 
         let user = {
-            firstName : retUser.firstName,
-            lastName : retUser.lastName,
-            username : retUser.username,
-            folder : retUser.folder,
-            classes : classes,
-            _id : retUser._id
+            firstName: retUser.firstName,
+            lastName: retUser.lastName,
+            username: retUser.username,
+            folder: retUser.folder,
+            classes: classes,
+            _id: retUser._id
         }
 
         res.send(user);
     }
-    catch (error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
@@ -129,21 +129,21 @@ app.post('/getUser', async (req, res) => {
 
 // - `/getUserByUsername` - `(req:{username : String}, res{User})` - UNTESTED
 app.get('/getUserByUsername', async (req, res) => {
-    try{
+    try {
         const username = req.body.username;
         console.log("/getUserByName UN: " + username);
 
-        const user = await User.findOne({username : username});
+        const user = await User.findOne({ username: username });
 
         let retUser = {
-            firstName : user.firstName,
-            lastName : user.lastName,
-            username : user.username,
-            _id : user._id
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            _id: user._id
         }
         res.send(retUser);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -151,24 +151,24 @@ app.get('/getUserByUsername', async (req, res) => {
 
 // - `/searchUserByLastName` - `(req:{lastName : String}, res{users : [User]})` - UNTESTED
 app.get('/searchUserByLastName', async (req, res) => {
-    try{
+    try {
         const lastName = req.body.lastName;
         console.log("/searchUserByLastName LN: " + lastName);
 
-        const users = User.find({lastName : lastName});
+        const users = User.find({ lastName: lastName });
         let retUsers = [];
-        for(const user of users){
+        for (const user of users) {
             retUsers.push({
-                firstName : user.firstName,
-                lastName : user.lastName,
-                username : user.username,
-                _id : user._id
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                _id: user._id
             })
         }
 
         res.send(retUsers)
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -184,16 +184,16 @@ app.get('/searchUserByLastName', async (req, res) => {
  * @returns The specified user.
  */
 app.post('/loginUser', async (req, res) => {
-    try{
+    try {
         const username = req.body.username;
         const password = req.body.password;
         console.log("/loginUser UN: " + username + " PW: " + password);
 
-        const user = await User.findOne({username : username, password : password});
+        const user = await User.findOne({ username: username, password: password });
 
         res.send(user);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -206,16 +206,16 @@ app.post('/loginUser', async (req, res) => {
  * 
  * @param userID The User._id of the user to be deleted.
  */
-app.post('/deleteUser', async (req, res) =>{
-    try{
+app.post('/deleteUser', async (req, res) => {
+    try {
         const userID = req.body.userID;
         console.log("/deleteUser id: " + userID);
 
-        const deletedUser = await User.deleteOne({_id : userID});
+        const deletedUser = await User.deleteOne({ _id: userID });
 
         res.send(deletedUser);
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -224,7 +224,7 @@ app.post('/deleteUser', async (req, res) =>{
 
 // - `/createFolder` - `(req : {title : String, parentID : Folder._id}, res{folder : Folder})` - UNTESTED
 app.post('/createFolder', async (req, res) => {
-    try{
+    try {
         const title = req.body.title;
         const parentID = req.body.parentID.substring(0, 24);
         console.log("/createFolder Title: " + title + " parent: " + parentID);
@@ -234,21 +234,21 @@ app.post('/createFolder', async (req, res) => {
 
         // Add to parent folder.
         const parent = await Folder.findById(parentID);
-        
-        const folder = new Folder({title : title, parent : parent._id, children, sets});
-        await folder.save();        
+
+        const folder = new Folder({ title: title, parent: parent._id, children, sets });
+        await folder.save();
 
         console.log(parent);
 
         let oldChildren = parent.children;
         oldChildren.push(folder._id);
         await Folder.findByIdAndUpdate(parent._id, {
-            children : oldChildren
+            children: oldChildren
         })
 
         res.send(folder);
     }
-    catch(error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
@@ -263,7 +263,7 @@ app.post('/createFolder', async (req, res) => {
  * @returns {title : String, parent : SmallFolder, children : [SmallFolder], sets : [SmallSet]}
  */
 app.post('/getFolderByID', async (req, res) => {
-    try{
+    try {
         console.log
         // Substring because someone is adding random '}'s to the end of the ID.
         const folderID = req.body.folderID.substring(0, 24);
@@ -274,51 +274,51 @@ app.post('/getFolderByID', async (req, res) => {
         const parentFolder = await Folder.findById(folder.parent);
 
         let parent = null;
-        if (parentFolder != null){
+        if (parentFolder != null) {
             parent = {
-                title : parentFolder.title,
-                _id : parentFolder._id
+                title: parentFolder.title,
+                _id: parentFolder._id
             }
         }
 
         let children = [];
 
-        for(const childID of folder.children){
-            const child =  await Folder.findById(childID);
+        for (const childID of folder.children) {
+            const child = await Folder.findById(childID);
             children.push({
-                title : child.title,
-                _id : childID
+                title: child.title,
+                _id: childID
             });
         }
 
         let sets = [];
 
-        for(const setID of folder.sets){
+        for (const setID of folder.sets) {
             const set = await Set.findById(setID);
             sets.push({
-                title : set.title,
-                _id : setID
+                title: set.title,
+                _id: setID
             });
         }
 
         let retFolder = {
-            title : folder.title,
-            parent : parent,
-            children : children,
-            sets : sets
+            title: folder.title,
+            parent: parent,
+            children: children,
+            sets: sets
         }
         //console.log(retFolder);
         res.send(retFolder);
     }
-    catch (error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
 });
 
 // - `/moveFolder` - `(req : {thisFolderID: Folder._id, newParentID : Folder._id}, res {})` - UNTESTED
-app.patch('/moveFolder', async (req, res) =>{
-    try{
+app.patch('/moveFolder', async (req, res) => {
+    try {
         const thisFolderID = req.body.thisFolderID;
         const newParentID = req.body.newParentID;
         console.log("/moveFolder thisFolder: " + thisFolderID + " NewParentID: " + newParentID);
@@ -331,7 +331,7 @@ app.patch('/moveFolder', async (req, res) =>{
         oldChildren.splice(index, 1);
 
         await Folder.findByIdAndUpdate(oldParent._id, {
-            children : oldChildren
+            children: oldChildren
         })
 
         // Add to new parent folder
@@ -339,22 +339,22 @@ app.patch('/moveFolder', async (req, res) =>{
         let newChildren = newParent.children;
         newChildren.push(thisFolderID);
         await Folder.findByIdAndUpdate(newParentID, {
-            children : newChildren
+            children: newChildren
         })
 
         await Folder.findByIdAndUpdate(thisFolderID, {
-            parent : newParentID
+            parent: newParentID
         });
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/moveSet` - `(req : {set: Set._id, oldParentID : Folder._id, newParentID : Folder._id}, res {})` - UNTESTED
-app.patch('/moveSet', async (req, res) =>{
-    try{
+app.patch('/moveSet', async (req, res) => {
+    try {
         const set = req.body.set;
         const oldParentID = req.body.oldParentID
         const newParentID = req.body.newParentID;
@@ -367,7 +367,7 @@ app.patch('/moveSet', async (req, res) =>{
         oldSets.splice(index, 1);
 
         await Folder.findByIdAndUpdate(oldParent._id, {
-            sets : oldSets
+            sets: oldSets
         })
 
         // Add to new parent folder
@@ -375,21 +375,21 @@ app.patch('/moveSet', async (req, res) =>{
         let newSets = newParent.sets;
         newSets.push(set);
         await Set.findByIdAndUpdate(newParentID, {
-            sets : newSets
+            sets: newSets
         })
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/deleteFolder` - `(req:{deletedID : Folder._id}, res{})` - UNTESTED
-app.post('/deleteFolder', async (req, res) =>{
-    try{
+app.post('/deleteFolder', async (req, res) => {
+    try {
         const deletedID = req.body.deletedID;
         console.log("/deleteFolder deleted: " + deletedID);
-        
+
         const deleted = await Folder.findById(deletedID);
         const parent = await Folder.findById(deleted.parent);
 
@@ -400,7 +400,7 @@ app.post('/deleteFolder', async (req, res) =>{
         children.splice(index, 1);
 
         await Set.findByIdAndUpdate(parent._id, {
-            children : children
+            children: children
         })
 
         console.log(parent);
@@ -408,7 +408,7 @@ app.post('/deleteFolder', async (req, res) =>{
         // Recursivly delete all children.
         deleteFolder(deletedID);
     }
-    catch(error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
@@ -417,7 +417,7 @@ app.post('/deleteFolder', async (req, res) =>{
 
 // - `/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
 app.post('/createClass', async (req, res) => {
-    try{
+    try {
         const title = req.body.title;
         const description = req.body.description;
         const ownerID = req.body.owner;
@@ -436,13 +436,13 @@ app.post('/createClass', async (req, res) => {
 
         classes.put(newClass._id);
 
-        User.findByIdAndUpdate({ownerID},{
-            $set : {classes : classes}
+        User.findByIdAndUpdate({ ownerID }, {
+            $set: { classes: classes }
         })
 
         res.send(newClass);
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -450,7 +450,7 @@ app.post('/createClass', async (req, res) => {
 
 // - `/getClass` - `(req : {classID : Class._id}, res {})` - UNTESTED
 app.get('/getClass', async (req, res) => {
-    try{
+    try {
         const classID = req.body.classID;
         console.log("/getClass ID: " + classID)
 
@@ -458,7 +458,7 @@ app.get('/getClass', async (req, res) => {
 
         res.send(retClass);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -466,7 +466,7 @@ app.get('/getClass', async (req, res) => {
 
 // - `/addStudent` - `(classID : Class._id, studentID : [User._id])` - UNTESTED
 app.patch('/addStudent', async (req, res) => {
-    try{
+    try {
         const classID = req.body.classID;
         const studentID = req.body.studentID;
         console.log("/addStudent classID: " + classID + " studentID: " + studentID);
@@ -478,7 +478,7 @@ app.patch('/addStudent', async (req, res) => {
         students.push(studentID);
 
         await Class.findByIdAndUpdate(classID, {
-            students : students
+            students: students
         })
 
         // Remove class from student's class list.
@@ -488,10 +488,10 @@ app.patch('/addStudent', async (req, res) => {
         classes.push(classID);
 
         await Student.findByIdAndUpdate(studentID, {
-            classes : classes
+            classes: classes
         })
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -499,7 +499,7 @@ app.patch('/addStudent', async (req, res) => {
 
 // - `/addTeacher` - `(req : {teachers : [User._id]}, res {})` - UNTESTED
 app.patch('/addStudent', async (req, res) => {
-    try{
+    try {
         const classID = req.body.classID;
         const teacherID = req.body.studentID;
         console.log("/addStudent classID: " + classID + " studentID: " + teacherID);
@@ -511,7 +511,7 @@ app.patch('/addStudent', async (req, res) => {
         teachers.push(teacherID);
 
         await Class.findByIdAndUpdate(classID, {
-            teachers : teachers
+            teachers: teachers
         })
 
         // Remove class from student's class list.
@@ -521,23 +521,23 @@ app.patch('/addStudent', async (req, res) => {
         classes.push(classID);
 
         await Student.findByIdAndUpdate(teacherID, {
-            classes : classes
+            classes: classes
         })
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 })
 
 // - `/removeStudent` - `(req : {classID : Class._id, studentID : [User._id]}, res {})` - UNTESTED
-app.patch('/removeStudent', async (req, res) =>{
-    try{
+app.patch('/removeStudent', async (req, res) => {
+    try {
         const classID = req.body.classID;
         const studentID = req.body.studentID;
         console.log("/removeStudent classID: " + classID + " studentID: " + studentID);
 
-        
+
 
         // Remove student from roster.
         const classs = await Class.findById(classID);
@@ -547,7 +547,7 @@ app.patch('/removeStudent', async (req, res) =>{
         students.splice(studentIndex, 1);
 
         await Class.findByIdAndUpdate(classID, {
-            students : students
+            students: students
         })
 
         // Remove class from student's class list.
@@ -558,18 +558,18 @@ app.patch('/removeStudent', async (req, res) =>{
         classes.splice(classIndex, 1);
 
         await Student.findByIdAndUpdate(studentID, {
-            classes : classes
+            classes: classes
         })
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/removeTeacher` - `(req : {classID : Class._id, studentID : [User._id]}, res {})` - UNTESTED
-app.patch('/removeTeacher', async (req, res) =>{
-    try{
+app.patch('/removeTeacher', async (req, res) => {
+    try {
         const classID = req.body.classID;
         const teacherID = req.body.studentID;
         console.log("/removeTeacher classID: " + classID + " teacherID: " + teacherID);
@@ -582,7 +582,7 @@ app.patch('/removeTeacher', async (req, res) =>{
         teachers.splice(studentIndex, 1);
 
         await Class.findByIdAndUpdate(classID, {
-            teachers : teachers
+            teachers: teachers
         })
 
         // Remove class from student's class list.
@@ -593,24 +593,24 @@ app.patch('/removeTeacher', async (req, res) =>{
         classes.splice(classIndex, 1);
 
         await Student.findByIdAndUpdate(teacherID, {
-            classes : classes
+            classes: classes
         })
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/deleteClass` - `(req : classID : Class._id)` - UNTESTED
-app.delete('/deleteClass', async (req, res) =>{
-    try{
+app.delete('/deleteClass', async (req, res) => {
+    try {
         const classID = req.body.classID;
         console.log("/deleteClass ID: " + classID);
 
         await Class.findByIdAndDelete(classID);
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -619,7 +619,7 @@ app.delete('/deleteClass', async (req, res) =>{
 
 // - `/createSet` - `(req:{parent : Folder._id, title : String, description : String}, res{})` - UNTESTED
 app.post('/createSet', async (req, res) => {
-    try{
+    try {
         console.log(req.body)
         const parentID = req.body.parent;
         const title = req.body.title;
@@ -628,7 +628,7 @@ app.post('/createSet', async (req, res) => {
 
         const flashcards = [];
 
-        const set = new Set({title, description, flashcards});
+        const set = new Set({ title, description, flashcards });
         set.save();
 
         // Add to folder.
@@ -637,12 +637,12 @@ app.post('/createSet', async (req, res) => {
         sets.push(set);
 
         await Folder.findByIdAndUpdate(parentID, {
-            sets : sets
+            sets: sets
         });
 
         res.send(set);
     }
-    catch(error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
@@ -650,9 +650,9 @@ app.post('/createSet', async (req, res) => {
 
 // - `/getSet` - `(req:(setID : Set._id), res(Set : Set, flashcards : [Flashcard]))` - UNTESTED
 app.get('/getSet', async (req, res) => {
-    try{
-        console.log(req.body);
-        const id = req.body.setID;
+    try {
+        console.log(JSON.stringify(req.query));
+        const id = req.query.setID;
 
         console.log("/getSet ID: " + id);
 
@@ -660,35 +660,35 @@ app.get('/getSet', async (req, res) => {
 
         let flashcards = [];
 
-        for(const cardID of set.flashcards){
+        for (const cardID of set.flashcards) {
             const flashcard = await Flashcard.findById(cardID)
             flashcards.put(flashcard);
         }
 
-        res.send({set: set, flashcards : flashcards});
+        res.send({ set: set, flashcards: flashcards });
     }
-    catch (error){
+    catch (error) {
         res.status(500).send(error);
         console.log(error);
     }
 })
 
 // - `/editSet` - `(req:{setID : Set._id, title : String, description : String}, res{})` - UNTESTED
-app.patch('/editSet', async (req, res) =>{
-    try{
+app.patch('/editSet', async (req, res) => {
+    try {
         const setID = req.body.setID;
         const title = req.body.title;
         const description = req.body.description;
         console.log("/editSet ID: " + setID + " title: " + title + " description: " + description);
 
         const card = await Flashcard.findByIdAndUpdate(setID, {
-            title : title,
-            description : description
+            title: title,
+            description: description
         });
 
         res.send(card);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -696,31 +696,37 @@ app.patch('/editSet', async (req, res) =>{
 
 // `/addCard` - `(req:{setID : Set._id, term : String, definition : String}, res:{_id : Flashcard._id})` - UNTESTED
 app.post('/addCard', async (req, res) => {
-    try{
+    try {
         const setID = req.body.setID;
         const term = req.body.term;
         const definition = req.body.definition;
         const profficiency = 0;
-        console.log("/addCard SetID: " +setID+ " Term : " +  term + " Def: " + definition);
+        console.log("/addCard SetID: " + setID + " Term : " + term + " Def: " + definition);
 
-        const flashcard = new Flashcard(term, definition, profficiency);
+        const flashcard = new Flashcard({term, definition, profficiency});
+        console.log("/addCard created")
         await flashcard.save();
+        console.log("/addCard saved")
 
         const set = await Set.findById(setID);
+        console.log("/addCard found set")
         let flashcards = set.flashcards;
         flashcards.push(flashcard._id);
+        console.log("/addCard added new card")
 
-        req.send(flashcard);
+
+        res.send(flashcard);
     }
-    catch(error){
+    catch (error) {
+        console.log(`/addSet err`)
         res.status().send(error);
         console.log(error);
     }
 });
 
 // `/removeCard` = `(req:{setID : Set._id, flashcard : Flashcard._id}, res{})` - UNTESTED
-app.delete('/removeCard', async (req, res) =>{
-    try{
+app.delete('/removeCard', async (req, res) => {
+    try {
         const setID = req.body.setID;
         const flashcardID = req.body.flashcardID;
         console.log("/removeCard setID: " + setID + " flashcardID: " + flashcardID);
@@ -733,24 +739,24 @@ app.delete('/removeCard', async (req, res) =>{
 
         await Flashcard.findByIdAndDelete(flashcardID);
         await Set.findByIdAndUpdate(setID, {
-            flashcards : flashcards
+            flashcards: flashcards
         })
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/deleteSet` - `(req:{setID : Set._id}, res{})` - UNTESTED
-app.delete('/deleteSet', async (req, res) =>{
-    try{
+app.delete('/deleteSet', async (req, res) => {
+    try {
         const setID = req.body.setID;
         console.log("/deleteSet id: " + setID);
 
         deleteSet(setID);
     }
-    catch(error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -759,54 +765,54 @@ app.delete('/deleteSet', async (req, res) =>{
 
 // - `/getCard` - `(req:{cardID : Flashcard._id}, res{Flashcard})` - UNTESTED
 app.get('/getCard', async (req, res) => {
-    try{
+    try {
         const cardID = req.body.cardID;
 
         const card = await Flashcard.findById(cardID);
 
         res.send(card);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 })
 
 // - `/editCard` - `(req:{flashcardID : Flashcard._id term : String, definition : Stringt}, res{})` - UNTESTED
-app.patch('/editCard', async (req, res) =>{
-    try{
+app.patch('/editCard', async (req, res) => {
+    try {
         const cardID = req.body.flashcardID;
         const term = req.body.term;
         const definition = req.body.definition;
         console.log("/editCard ID: " + cardID + " term: " + term + " definition: " + definition);
 
         const card = await Flashcard.findByIdAndUpdate(cardID, {
-            term : term,
-            definition : definition
+            term: term,
+            definition: definition
         });
 
         res.send(card);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
 });
 
 // - `/updateProfficiency` - `(req:{cardID : Flashcard._id, profficiency : Number}, res{})` - UNTESTED
-app.patch('/updateProfficiency', async (req, res) =>{
-    try{
+app.patch('/updateProfficiency', async (req, res) => {
+    try {
         const cardID = req.body.flashcardID;
         const profficiency = req.body.profficiency;
         console.log("/editCard ID: " + cardID + " prof: " + profficiency);
 
         const card = await Flashcard.findByIdAndUpdate(cardID, {
-            profficiency : profficiency
+            profficiency: profficiency
         });
 
         res.send(card);
     }
-    catch (error){
+    catch (error) {
         res.status().send(error);
         console.log(error);
     }
@@ -821,13 +827,13 @@ app.patch('/updateProfficiency', async (req, res) =>{
  * @param {String} name 
  * @returns A new root folder, initialized correctly.
  */
-async function createRootFolder(name){
+async function createRootFolder(name) {
     const title = name + "RootFolder";
     const parent = null;
     const children = [];
     const sets = []
 
-    const newFolder = new Folder({title, parent, children, sets});
+    const newFolder = new Folder({ title, parent, children, sets });
     const root = await newFolder.save();
     return root;
 }
@@ -837,16 +843,16 @@ async function createRootFolder(name){
  * 
  * @param {Folder._id} id 
  */
-async function deleteFolder(id){
+async function deleteFolder(id) {
     const folder = await Folder.findById(id);
-    
+
     // delete children
-    for(const child of folder.children){
+    for (const child of folder.children) {
         deleteFolder(child._id);
     }
 
     // Delete sets
-    for(const set of folder.sets){
+    for (const set of folder.sets) {
         const set = await Set.findByIdAndDelete(set);
 
         deleteSet(set._id);
@@ -860,11 +866,11 @@ async function deleteFolder(id){
  * UNTESTED: Deletes the passed set and all flashcards within the set.
  * @param {Set._id} id 
  */
-function deleteSet(id){
+function deleteSet(id) {
 
     const set = Set.findById(id)
 
-    for(const card of set){
+    for (const card of set) {
         Flashcard.findByIdAndDelete(card._id);
     }
 
