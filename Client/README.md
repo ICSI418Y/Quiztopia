@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Docs:
+
+### Axios:
+
+When using get `axios.get(...)` if you are passing in request parameters, like a set or user id, instead of just doing `axios.get("url", parameters)`, you would do `axios.get("url", {params: parameters})`.
+
+For example if you did `axios.get("http://localhost:9000/getUser", { username: username })`, you would now do: `axios.get("http://localhost:9000/getUser", { params: { username: username }})`
+
+
 ## Note about client side pages:
 If you're page is conditionally rendered (only does something if the user is logger in).
 You should use the Template function, which automatically renders the content for you only if the user is logged in.
