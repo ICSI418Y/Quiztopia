@@ -42,9 +42,9 @@ function Home(){
               <Link to={`/ViewFolder/${folder}`}>View Folders </Link>
             }
             {classes.map((classs) => {
-              <Link to={`/viewClass/${classs._id}`}>{classs.title}</Link>
+              <Link to={`/ViewClass/${classs._id}`}>{classs.title}</Link>
             })}
-
+            <Link to="/ViewCardSet">View Card Set</Link>
           </body>
           <button onClick={(handleLogout)}>Logout</button>
         </div>
