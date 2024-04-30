@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import './App.css';
 
 function Template(title, content) {
+
     const loggedInUser = localStorage.getItem('loggedInUser')
-    return (<div className="center background">
+
+    return (<div className="background">
         <h1>{title}</h1>
         <>
             {loggedInUser != null &&

@@ -61,7 +61,11 @@ function SignUp() {
       Last Name
       <input className="inputBoxSizes" value={lastName} onChange={(e) => setLastName(e.target.value)} />
     </form>
-    <button className="createAccountButtonSpacing" disabled={!(username && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} onClick={handleSignUp} type="submit">submit</button>
+    <button 
+      className="createAccountButtonSpacing" 
+      disabled={!(username && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} 
+      onClick={handleSignUp} t
+      ype="submit">submit</button>
   </div>)
 }
 
