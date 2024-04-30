@@ -17,7 +17,7 @@ function ViewSet() {
 
     useEffect(() => {
         const setValue = { setID };
-        console.log(JSON.stringify(setValue))
+        //console.log(JSON.stringify(setValue))
         axios.get('http://localhost:9000/getSet', { params: setValue })
             .then((res) => {
                 setSet(res.data.set);
@@ -32,6 +32,14 @@ function ViewSet() {
         axios.post('http://localhost:9000/addCard', { setID, term, definition })
             .then((res) => {
                 if (res.data) {
+                    const setValue = { setID };
+                    axios.get('http://localhost:9000/getSet', { params: setValue })
+                    .then((res) => {
+                        setFlashcards(res.data.flashcards)
+                    })
+                    .catch((err) => {
+                        alert("Error getting set: " + err);
+                    });
                     alert("Great Success");
                 }
             })
@@ -49,10 +57,10 @@ function ViewSet() {
             <h1>{set.title}</h1>
             <p>{set.description}</p>
             <h2>Cards <Link to="/home">Home</Link></h2>
-            <ul className='center'>
+            <ul>
                 {flashcards.map((card) => (
                     <li key={card._id}>
-                        <strong>Term:</strong> {card.term}, <strong>Definition:</strong> {card.definition}
+                        <strong>Term:</strong> {card.term} <br/><strong>Definition:</strong> {card.definition}
                     </li>
                 ))}
             </ul>

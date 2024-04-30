@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CreateCardSet.css';
 
@@ -19,11 +19,12 @@ const CreateCardSet = () => {
             .then((res) => {
                 const newSetId = res.data._id
                 setId(newSetId);
-            
-            alert('Set created successfully')
+                alert('Set created successfully')
+                navigate(`/viewCardSet/${newSetId}`);
             })
-            .catch((err) => alert('Error creating set'));
-            navigate('/viewCardSet/${set_id}');
+            .catch((err) => {
+                alert('Error creating set')
+            });
     };
 
     return (
@@ -51,7 +52,10 @@ const CreateCardSet = () => {
                 />
             </label>
             </div>
-            <button>Create Set</button>
+            <button
+              type = 'submit'
+              onClick={handleCreateSet}
+            >Create Set</button>
             
         </form>
     );
