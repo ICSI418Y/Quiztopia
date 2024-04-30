@@ -3,25 +3,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 //import Template from './Template';
 import './App.css';
+import FolderTemplate from './FolderTemplate';
 
 function Home(){
     const navigate = useNavigate();
     const loggedInUser = localStorage.getItem('loggedInUser')
 
     const [username, setUsername] = useState("");
-    const [folder, setFolder] = useState("");
+    const [folderID, setFolderID] = useState("");
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
-        axios.post('http://localhost:9000/getUser', {userID : loggedInUser})
-        .then((res) => {
-          setUsername(res.data.username);
-          setFolder(res.data.folder);
-          setClasses(res.data.classes);
-        })
-        .catch((err) => {
-            alert("ERROR: " + err);
-        })
+        if (loggedInUser != null){
+            axios.post('http://localhost:9000/getUser', {userID : loggedInUser})
+            .then((res) => {
+              setUsername(res.data.username);
+              setFolderID(res.data.folder);
+              if (res.data.classes)
+                setClasses(res.data.classes);
+            })
+            .catch((err) => {
+                alert("/getUser: " + err);
+            })
+        }
     }, []);
 
     const handleLogout = (event) =>{
@@ -30,23 +34,56 @@ function Home(){
       navigate('/login');
     }
 
+
+
     return(
         <div className='background'>
           <h1>
             Welcome{loggedInUser !=null && `, ${username}`} to Quiztopia!!!
           </h1>
-          <body className='navbar-center'>
-            <Link to="/Login">Login </Link>
-            <Link to="/Signup">Signup </Link>
-            { loggedInUser != null &&
-              <Link to={`/ViewFolder/${folder}`}>View Folders </Link>
+          <p className='navbar-center'>
+            { loggedInUser == null && 
+              <>
+                <Link to="/Login">Login </Link>
+                <Link to="/Signup">Signup </Link>
+              </>
             }
-            {classes.map((classs) => {
-              <Link to={`/ViewClass/${classs._id}`}>{classs.title}</Link>
-            })}
-            <Link to="/ViewCardSet">View Card Set</Link>
-          </body>
-          <button onClick={(handleLogout)}>Logout</button>
+            { loggedInUser != null &&
+              <>
+                <Link to={`/ViewFolder/${folderID}`}>View Folders </Link>
+                <Link to='/CreateClass'>Create New Class</Link>
+                <button onClick={(handleLogout)}>Logout</button>
+              </>
+            }
+          </p>
+          {loggedInUser != null &&
+            <>
+              <div>
+                {classes != null && 
+                  <>
+                    <h2>
+                      Classes:
+                    </h2>
+                    <ul>
+                      {classes.map((clase) => {
+                        return(
+                          <li>
+                            <Link to={`/ViewClass/${clase._id}`}>{clase.title}</Link>
+                          </li>
+                        );
+                    })}
+                    </ul>
+                  </>
+                }
+                
+                
+                <h2>
+                  Folders:
+                </h2>
+                <FolderTemplate/>
+              </div>
+            </>
+          }
         </div>
     );
 }
