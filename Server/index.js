@@ -12,7 +12,7 @@ const Class = require('./ClassSchema.js');
 app.use(express.json());
 app.use(cors());
 app.listen(9000, () => {
-    console.log('Server Started at ${9000}')
+    console.log(`Server Started at ${9000}`)
 })
 
 const mongoose = require('mongoose');
@@ -25,7 +25,7 @@ database.on('error', (error) => console.log(error))
 database.once('connected', () => console.log('Database Connected'))
 
 /**
- * /createUser
+ * http://localhost:9000/createUser
  * 
  * Creates a new user using the provided information. Returns error if a user with the same username already exists.
  * 
@@ -175,7 +175,7 @@ app.get('/searchUserByLastName', async (req, res) => {
 });
 
 /**
- * /loginUser
+ * http://localhost:9000/loginUser
  * 
  * Takes a username and password and returns the specified user if the correct password is given.
  * 
@@ -200,7 +200,7 @@ app.post('/loginUser', async (req, res) => {
 })
 
 /**
- * /deleteUser
+ * http://localhost:9000/deleteUser
  * 
  * Takes a User._id and deletes the specifed User.
  * 
@@ -222,7 +222,15 @@ app.post('/deleteUser', async (req, res) => {
 });
 
 
-// - `/createFolder` - `(req : {title : String, parentID : Folder._id}, res{folder : Folder})` - UNTESTED
+/**
+ * http://localhost:9000/createFolder
+ * 
+ * Takes a title, and a parent folder, and creates a new folder.
+ * 
+ * @param title : String. The title of the new folder.
+ * @param parentID : Folder._id. The parent folder to the new folder. 
+ * @returns The newly created folder.
+ */
 app.post('/createFolder', async (req, res) => {
     try {
         const title = req.body.title;
@@ -238,7 +246,7 @@ app.post('/createFolder', async (req, res) => {
         const folder = new Folder({ title: title, parent: parent._id, children, sets });
         await folder.save();
 
-        console.log(parent);
+        //console.log(parent);
 
         let oldChildren = parent.children;
         oldChildren.push(folder._id);
@@ -255,7 +263,7 @@ app.post('/createFolder', async (req, res) => {
 });
 
 /**
- * /getFolderByID
+ * http://localhost:9000/getFolderByID
  * 
  * Returns a folder based on the passed folder._id.
  * 
@@ -264,9 +272,8 @@ app.post('/createFolder', async (req, res) => {
  */
 app.post('/getFolderByID', async (req, res) => {
     try {
-        console.log
-        // Substring because someone is adding random '}'s to the end of the ID.
-        const folderID = req.body.folderID.substring(0, 24);
+        //console.log((req.body));
+        const folderID = req.body.folderID//.substring(0, 24);
         console.log("/getFolderByID id: " + folderID);
 
         const folder = await Folder.findById(folderID);
@@ -285,6 +292,7 @@ app.post('/getFolderByID', async (req, res) => {
 
         for (const childID of folder.children) {
             const child = await Folder.findById(childID);
+            if (child !=null)
             children.push({
                 title: child.title,
                 _id: childID
@@ -415,13 +423,16 @@ app.post('/deleteFolder', async (req, res) => {
 });
 
 
-// - `/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
+// - `http://localhost:9000/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
 app.post('/createClass', async (req, res) => {
     try {
+        //console.log(req.body);
         const title = req.body.title;
         const description = req.body.description;
         const ownerID = req.body.owner;
-        console.log("/createClass title: " + title + " Desc: " + description + " Owner: " + ownerID);
+        console.log("/createClass title: " + title + 
+            " Desc: " + description + 
+            " Owner: " + ownerID);
 
         const folder = createRootFolder(title);
         const teachers = [];
@@ -443,12 +454,12 @@ app.post('/createClass', async (req, res) => {
         res.send(newClass);
     }
     catch (error) {
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
 
-// - `/getClass` - `(req : {classID : Class._id}, res {})` - UNTESTED
+// - `/getClass` - `(req : {classID : Class._id}, res {Class})` - UNTESTED
 app.get('/getClass', async (req, res) => {
     try {
         const classID = req.body.classID;
@@ -662,7 +673,7 @@ app.get('/getSet', async (req, res) => {
 
         for (const cardID of set.flashcards) {
             const flashcard = await Flashcard.findById(cardID)
-            flashcards.put(flashcard);
+            flashcards.push(flashcard);
         }
 
         res.send({ set: set, flashcards: flashcards });
@@ -714,6 +725,9 @@ app.post('/addCard', async (req, res) => {
         flashcards.push(flashcard._id);
         console.log("/addCard added new card")
 
+        await Set.findByIdAndUpdate(setID, {
+            flashcards : flashcards
+        });
 
         res.send(flashcard);
     }
