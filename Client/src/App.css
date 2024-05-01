@@ -93,7 +93,8 @@
 .navbar-center {
   float: none;
   position: relative;
-  top: 50%;
+  /* top: 50%; */
+  top: 10%;
   left: 49.6%;
   padding: 7px;
   transform: translate(-50%, -50%);
