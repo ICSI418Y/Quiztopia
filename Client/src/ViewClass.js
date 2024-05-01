@@ -1,45 +1,91 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import Template from './Template.js'
+import FolderTemplate from "./FolderTemplate.js";
 import './index.css';
 import './App.css';
 
 const ViewClass = () => {
-    const [thisClass, setClass] = useState([])
-    const [studentRoster, setStudentRoster] = useState([])
-    const [teacherRoster, setTeacherRoster] = useState([])
-    const studentNames = []
-    const teacherNames = []
+
+    const loggedInUser = localStorage.getItem('loggedInUser');
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [folderID, setFolderID] = useState('');
+    const [ownerID, setOwnerID] = useState('');
+    const [studentIDs, setStudentIDs] = useState([]);
+    const [teacherIDs, setTeacherIDs] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const { classID } = useParams();
+
     useEffect(() => {
-        axios.get('http://localhost:9000/getClass').then((res) => setClass(res.data))
-        axios.get('http://localhost:9000/getRoster', thisClass.students).then((res) => setStudentRoster(res.data))
-        axios.get('http://localhost:9000/getRoster', thisClass.teachers).then((res) => setTeacherRoster(res.data))
-    })
-    const studentUsers = studentRoster.users
-    const teacherUsers = teacherRoster.users
-    for (let i = 0; i < studentRoster.users.length; i++) {
-        const name = studentRoster.users[i].firstName + studentRoster.users[i].lastName
-        studentNames[i] = name
-    }
-    for (let i = 0; i < teacherRoster.users.length; i++) {
-        const name = teacherRoster.users[i].firstName + teacherRoster.users[i].lastName
-        teacherNames[i] = name
-    }
-    return (
-        <form className="background">
-            <div className="center">
-                Names of teachers in class: {this.props.teacherNames.map(txt => <p>{txt}</p>)}
-            </div>
-            <div className="center">
-                Names of students in class: {this.props.studentNamesNames.map(txt => <p>{txt}</p>)}
-            </div>
-            <p>
-                Would you like to edit your class? <Link to="/EditClass">Folders</Link>
-            </p>
-            <p>
-                Would you like to view your folders? <Link to="/ViewFolder">Folders</Link>
-            </p>
-        </form>
-    )
+        axios.post('http://localhost:9000/getClass', {classID})
+        .then((res) => {
+            setTitle(res.data.title);
+            setDescription(res.data.description);
+            setFolderID(res.data.folder);
+            setLoading(false);
+            setOwnerID(res.data.owner);
+            setTeacherIDs(res.data.teachers);
+            setStudentIDs(res.data.students);
+        })
+        .catch((err) => {
+            alert("ERROR: /getClass: " + err);
+        });
+    }, [classID]);
+
+    const removeTeacher = (teacher) => {
+
+    };
+
+    const removeStudent = (student) => {
+
+    };
+
+    return Template(title, 
+      <div className="background">
+        { loggedInUser == ownerID &&
+          <>
+            <h2>Teachers: <Link>Add teachers</Link></h2>
+            <ul>
+              {teachers.map((teacher) => {
+                return (
+                    <li>
+                      {`${teacher.firstName} ${teacher. lastName} `}
+                      <button 
+                        onClick = {removeTeacher(teacher._id)}
+                      >Remove teacher</button>
+                    </li>
+                )
+              })}
+            </ul>
+          </>
+        }
+        { (loggedInUser == ownerID || teacherIDs.indexOf(loggedInUser) != -1) &&
+            <>
+              <h2>Students: </h2>
+              <ul>
+                {students.map((student) => {
+                    return (
+                        <li>
+                          {`${student.firstName} ${student.lastName} `}
+                          <button
+                            onClick = {removeStudent(student)}
+                          >Remove Student</button>
+                        </li>
+                    )
+                })}
+              </ul>
+            </>
+        }
+        {!loading && folderID && 
+          <FolderTemplate folderID = {folderID}/>
+        }
+      </div>
+    );
 }
 export default ViewClass;

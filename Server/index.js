@@ -94,7 +94,14 @@ app.get('/getUsers', async (req, res) => {
     }
 })
 
-// - `/getUser` - `(req:{userID : User._id}, res{retUser : User})` - UNTESTED
+/**
+ * http://localhost:9000getUser
+ * 
+ * Gets the user specified by the passed userID
+ * 
+ * @param userID The User._id of the desired user.
+ * @returns The user specified by the passed userID.
+ */
 app.post('/getUser', async (req, res) => {
     try {
         const userID = req.body.userID;
@@ -103,12 +110,16 @@ app.post('/getUser', async (req, res) => {
         const retUser = await User.findById(userID);
 
         let classes = [];
-        for (const classs of retUser.classes) {
-            classes.push({
-                title: classs,
-                _id: classs._id
-            })
-        }
+
+        if (retUser.classes){
+            for (const classID of retUser.classes) {
+                const clase = await Class.findById(classID)
+                classes.push({
+                    title: clase.title,
+                    _id: classID
+                })
+            }
+        }        
 
         let user = {
             firstName: retUser.firstName,
@@ -424,6 +435,16 @@ app.post('/deleteFolder', async (req, res) => {
 
 
 // - `http://localhost:9000/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
+/**
+ * http://localhost:9000/createClass
+ * 
+ * Creates a new class with the passed Title, Description, and ownerID.
+ * 
+ * @param title The title of the new class.
+ * @param description The description of the new class.
+ * @param owner The User._id of the new class.
+ * @returns The newly created class.
+ */
 app.post('/createClass', async (req, res) => {
     try {
         //console.log(req.body);
@@ -434,21 +455,28 @@ app.post('/createClass', async (req, res) => {
             " Desc: " + description + 
             " Owner: " + ownerID);
 
-        const folder = createRootFolder(title);
+        const folder = await createRootFolder(title);
         const teachers = [];
         const students = [];
 
-        const newClass = new Class(title, description, folder, teachers, students);
+        const newClass = new Class({
+            title : title,
+            description : description,
+            folder : folder,
+            owner : ownerID,
+            teachers : teachers,
+            students : students
+        });
         await newClass.save();
 
         // Add to owner's classes
-        const owner = User.findByIdAndUpdate(ownerID);
-        let classes = owner.classes;
+        const owner = await User.findById(ownerID);
+        let classes = owner.classes || [];
 
-        classes.put(newClass._id);
+        classes.push(newClass._id);
 
-        User.findByIdAndUpdate({ ownerID }, {
-            $set: { classes: classes }
+        await User.findByIdAndUpdate(ownerID, {
+            classes: classes
         })
 
         res.send(newClass);
@@ -460,8 +488,9 @@ app.post('/createClass', async (req, res) => {
 });
 
 // - `/getClass` - `(req : {classID : Class._id}, res {Class})` - UNTESTED
-app.get('/getClass', async (req, res) => {
+app.post('/getClass', async (req, res) => {
     try {
+        console.log(req.body)
         const classID = req.body.classID;
         console.log("/getClass ID: " + classID)
 

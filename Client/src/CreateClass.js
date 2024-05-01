@@ -1,58 +1,84 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './index.css';
-import Select from 'react-select';
+import Template from './Template.js';
 import './App.css';
 
     const CreateClass = () => {
-        const [owner, setOwner] = useState([])
-        const [selectedTeachers, setSelectedTeachers] = useState([])
-        const [selectedStudents, setSelectedStudents] = useState([])
-        const [users, setUsers] = useState([])
-        const handleCreateClass = (event, owner, selectedStudents, selectedTeachers) => {
-            event.preventDefault()
-            axios.get('http://localhost:9000/getFolderByID' , {folder_id}).then((res)=>setRootFolder(res.data))
-            axios.post('http://localhost:9000/createTeamRoster', {owner, selectedTeachers, selectedStudents})
-            .catch((err) => alert('Error in Creating Class'))
-        }
-        useEffect(() => {
-            axios.get('http://localhost:9000/getUsers').then((res)=>setUsers(res.data))
-        })
-        const userOptions = users.map((user) => {
-            return {label: user.firstName + user.lastName, value: user._id}
+
+        const navigate = useNavigate();
+        const loggedInUser = localStorage.getItem('loggedInUser')
+
+        //const [owner, setOwner] = useState("");
+        const [title, setTitle] = useState("");
+        const [description, setDescription] = useState("");
+
+        const handleCreateClass = (event) => {
+
+            event.preventDefault();
+            axios.post('http://localhost:9000/createClass', {
+                title : title, 
+                description : description, 
+                owner : loggedInUser
             })
-        return(
-            <div className="background">
-                <select onChange={(e) => setOwner(e.target.value)} value={owner}>
-                    <option value="">Select Owner of Class</option>
-                        {users.map((user, index) => {
-                        return <option key={index} value={user._id}>   
-                        {user.firstName}{user.lastName}
-                    </option>
-                    })
-                    }
-                </select>
-                <label className="center">Select Teachers
-                    <Select
-                        isMulti
-                        options={userOptions}
-                        value={selectedTeachers}
-                        onChange={setSelectedTeachers(e)}
-                    />
-                </label>
-                <label className="center">Select Students
-                    <Select
-                        isMulti
-                        options={userOptions}
-                        value={selectedStudents}
-                        onChange={setSelectedStudents(e)}
-                    />
-                </label>
-                <button className='loginButtonSpacing' type="button" onClick={(event) => handleCreateClass(event, owner, selectedStudents, selectedTeachers)}>
-                        Create Class
-                </button>
-            </div>
-            )
+            .then((res) => {
+                if (res.data){
+                    alert("Great success! :) " + res.data);
+                    navigate(`/viewClass/${res.data._id}`);
+                }
+                else
+                    alert("Error creating class.");
+            })
+            .catch((err) => {
+                alert("Error: /createClass: " + err);
+            })
+        };
+
+        // useEffect(() => {
+        //     setOwner(loggedInUser);
+        // });
+
+        return Template("Create Class", 
+          <div className='background'>
+            <h2>
+              Enter the name and description of your class. 
+              (Don't worry, you can add students and teachers later.)
+            </h2>
+            <form>
+              <label>Enter a title: </label>
+              <br/>
+              <input 
+                className="inputBoxSizes"
+                type="text"
+                value={title}
+                onChange={(e) => {setTitle(e.target.value)}}
+                placeholder="Title"
+                required
+              />
+              <br/>
+              <label>Enter a description: </label>
+              <br/>
+              <input
+                className="inputBoxSizes"
+                type="text"
+                value={description}
+                onChange={(e) => {setDescription(e.target.value)}}
+                placeholder="Description"
+                required
+              />
+              <br/>
+              
+            </form>
+            <button 
+              type = "submit"
+              onClick = {handleCreateClass}
+              disabled = {!(title && description)}
+            >
+              Create Class!
+            </button>
+          </div>
+        );
     }
 
     export default CreateClass;
