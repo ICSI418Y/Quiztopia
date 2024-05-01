@@ -23,9 +23,6 @@ function FolderTemplate(folder_ID){
     const handleDeleteFolder = (folder_id) => {
         //event.preventDefault()
         axios.post('http://localhost:9000/deleteFolder', { deletedID: folder_id })
-        .then((res) => {
-
-        })
         .catch((err) => {
             alert('Error in Deleting Folder: ' + err)
         });

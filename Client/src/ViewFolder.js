@@ -31,18 +31,6 @@ const ViewFolder = () => {
         })
     }, [folderID])
 
-    const handleCreateFolder = (event, folderName, folder_id) => {
-        event.preventDefault()
-        axios.post('http://localhost:9000/createFolder', { folderName, folder_id })
-            .catch((err) => alert('Error in Creating Folder'))
-    }
-
-    const handleDeleteFolder = (folder_id) => {
-        //event.preventDefault()
-        axios.post('http://localhost:9000/deleteFolder', { deletedID: folder_id })
-            .catch((err) => alert('Error in Deleting Folder: ' + err));
-    }
-
     return (
         <div className="background">
             <h1>{
