@@ -7,7 +7,7 @@ import FolderTemplate from './FolderTemplate';
 
 function Home(){
     const navigate = useNavigate();
-    const loggedInUser = localStorage.getItem('loggedInUser')
+    const loggedInUser = localStorage.getItem('loggedInUser');
 
     const [username, setUsername] = useState("");
     const [folderID, setFolderID] = useState("");
