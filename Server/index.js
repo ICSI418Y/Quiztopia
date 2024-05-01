@@ -488,10 +488,10 @@ app.post('/createClass', async (req, res) => {
 });
 
 // - `/getClass` - `(req : {classID : Class._id}, res {Class})` - UNTESTED
-app.get('/getClass', async (req, res) => {
+app.post('/getClass', async (req, res) => {
     try {
-        //console.log(req)
-        const classID = req.params.classID;
+        console.log(req.body)
+        const classID = req.body.classID;
         console.log("/getClass ID: " + classID)
 
         const retClass = await Class.findById(classID);
