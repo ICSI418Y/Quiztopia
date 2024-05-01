@@ -70,7 +70,7 @@ app.post('/createUser', async (req, res) => {
 });
 
 // - `/getUsers` - `(req:{userIDs : [User._id]}, res{userList : [User]})` - UNTESTED
-app.get('/getUsers', async (req, res) => {
+app.post('/getUsers', async (req, res) => {
     try {
         const userIDs = req.body.userIDs;
         console.log("/getUsers ids: " + userIDs);
@@ -95,7 +95,7 @@ app.get('/getUsers', async (req, res) => {
 })
 
 /**
- * http://localhost:9000getUser
+ * http://localhost:9000/getUser
  * 
  * Gets the user specified by the passed userID
  * 
