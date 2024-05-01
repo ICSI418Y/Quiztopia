@@ -3,6 +3,7 @@ import {React, useState, useEffect} from "react";
 import { Link, useParams } from 'react-router-dom';
 import './index.css';
 import './App.css';
+import Template from './Template.js'
 import FolderTemplate from "./FolderTemplate";
 
 const ViewFolder = () => {
@@ -31,7 +32,7 @@ const ViewFolder = () => {
         })
     }, [folderID])
 
-    return (
+    return Template( "View Folder",
         <div className="background">
             <h1>{
                     parentID != null &&  <Link to={`/viewFolder/${parentID}`}>{parentTitle}</Link>
