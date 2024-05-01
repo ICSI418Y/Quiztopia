@@ -17,7 +17,6 @@ import PracticeTestSet from './TestSet';
 import ViewSet from './ViewCardSet';
 import CreateClass from './CreateClass';
 import ViewClass from './ViewClass';
-import EditClass from './EditClass';
 import ViewFolder from './ViewFolder';
 import CreateFolder from './CreateFolder';
 
@@ -38,8 +37,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/practiceTest" element={<PracticeTestSet />} />
       <Route className="navbar-center" path="/viewCardSet/:setID" element={<ViewSet />} />
       <Route className="navbar-center" path="/createClass" element={<CreateClass />} />
-      <Route className="navbar-center" path="/editClass/:classId" element={<EditClass />} />
-      <Route className="navbar-center" path="/viewClass/:classId" element={<ViewClass />} />
+      <Route className="navbar-center" path="/viewClass/:classID" element={<ViewClass />} />
       <Route className="navbar-center" path="/viewFolder/:folderID" element={<ViewFolder />} />
       <Route className="navbar-center" path="/createFolder/:folderID" element={<CreateFolder/>}/>
     </>
