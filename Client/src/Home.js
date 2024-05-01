@@ -12,6 +12,7 @@ function Home(){
     const [username, setUsername] = useState("");
     const [folderID, setFolderID] = useState("");
     const [classes, setClasses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (loggedInUser != null){
@@ -19,6 +20,7 @@ function Home(){
             .then((res) => {
               setUsername(res.data.username);
               setFolderID(res.data.folder);
+              setLoading(false);
               if (res.data.classes)
                 setClasses(res.data.classes);
             })
@@ -26,7 +28,7 @@ function Home(){
                 alert("/getUser: " + err);
             })
         }
-    }, []);
+    }, [loggedInUser]);
 
     const handleLogout = (event) =>{
       event.preventDefault();
@@ -80,7 +82,11 @@ function Home(){
                 <h2>
                   Folders:
                 </h2>
-                <FolderTemplate/>
+                {!loading && folderID && 
+                  <>
+                    <FolderTemplate folderID = {folderID}/>
+                  </>
+                }
               </div>
             </>
           }

@@ -94,7 +94,14 @@ app.get('/getUsers', async (req, res) => {
     }
 })
 
-// - `/getUser` - `(req:{userID : User._id}, res{retUser : User})` - UNTESTED
+/**
+ * http://localhost:9000getUser
+ * 
+ * Gets the user specified by the passed userID
+ * 
+ * @param userID The User._id of the desired user.
+ * @returns The user specified by the passed userID.
+ */
 app.post('/getUser', async (req, res) => {
     try {
         const userID = req.body.userID;
@@ -428,6 +435,16 @@ app.post('/deleteFolder', async (req, res) => {
 
 
 // - `http://localhost:9000/createClass` - `(req : {title : String, description : String, owner : User._id}, res {Class})` - UNTESTED
+/**
+ * http://localhost:9000/createClass
+ * 
+ * Creates a new class with the passed Title, Description, and ownerID.
+ * 
+ * @param title The title of the new class.
+ * @param description The description of the new class.
+ * @param owner The User._id of the new class.
+ * @returns The newly created class.
+ */
 app.post('/createClass', async (req, res) => {
     try {
         //console.log(req.body);
@@ -473,7 +490,8 @@ app.post('/createClass', async (req, res) => {
 // - `/getClass` - `(req : {classID : Class._id}, res {Class})` - UNTESTED
 app.get('/getClass', async (req, res) => {
     try {
-        const classID = req.body.classID;
+        //console.log(req)
+        const classID = req.params.classID;
         console.log("/getClass ID: " + classID)
 
         const retClass = await Class.findById(classID);
