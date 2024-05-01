@@ -22,6 +22,7 @@ const ViewClass = () => {
 
     const { classID } = useParams();
 
+    // Get class info.
     useEffect(() => {
         axios.post('http://localhost:9000/getClass', {classID})
         .then((res) => {
@@ -38,6 +39,32 @@ const ViewClass = () => {
         });
     }, [classID]);
 
+    // Get student info
+    useEffect(() => {
+        if (studentIDs !== null && studentIDs.length !== 0){
+            axios.post('http://localhost:9000/getUsers', {userIDs : studentIDs})
+            .then((res) => {
+                setStudents(res.data);
+            })
+            .catch((err) => {
+                alert('ERROR: Student /getUsers: ' + err);
+            });
+        }
+    }, [studentIDs])
+
+    // Get teacher info
+    useEffect(() => {
+        if (teacherIDs !== null && teacherIDs.length !== 0){
+            axios.post('http://localhost:9000/getUsers', {userIDs : teacherIDs})
+            .then((res) => {
+                setTeachers(res.data);
+            })
+            .catch((err) => {
+                alert('ERROR: Teachers /getUsers: ' + err);
+            });
+        }
+    }, [teacherIDs])
+
     const removeTeacher = (teacher) => {
 
     };
@@ -48,14 +75,15 @@ const ViewClass = () => {
 
     return Template(title, 
       <div className="background">
-        { loggedInUser == ownerID &&
+        <p>{description}</p>
+        { loggedInUser === ownerID &&
           <>
-            <h2>Teachers: <Link>Add teachers</Link></h2>
+            <h2>Teachers: <Link to={`/addTeachers/${classID}`}>Add teachers</Link></h2>
             <ul>
               {teachers.map((teacher) => {
                 return (
                     <li>
-                      {`${teacher.firstName} ${teacher. lastName} `}
+                      {`${teacher.firstName} ${teacher.lastName} `}
                       <button 
                         onClick = {removeTeacher(teacher._id)}
                       >Remove teacher</button>
@@ -65,9 +93,9 @@ const ViewClass = () => {
             </ul>
           </>
         }
-        { (loggedInUser == ownerID || teacherIDs.indexOf(loggedInUser) != -1) &&
+        { (loggedInUser === ownerID || teacherIDs.indexOf(loggedInUser) !== -1) &&
             <>
-              <h2>Students: </h2>
+              <h2>Students: <Link to={`/addStudents/${classID}`}>Add students</Link></h2>
               <ul>
                 {students.map((student) => {
                     return (
