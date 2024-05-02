@@ -11,14 +11,14 @@ const Help = () =>{
             Commonly asked questions
           </h2>
           <p>
-            Q: If I delete a folder, does it delete all of the folders beneath it
+            Q: If I delete a folder, does it delete all of the folders beneath it?
           <br/>
             A: Yes, if you want to save info from any child folders copy them and move them somewhere else first
           </p>
           <p>
-            Q: I accidently deleted a folder that contained everything, can I get it back
+            Q: I accidently deleted a folder that contained everything, can I get it back?
           <br/>
-            A: No, sorry
+            A: No, sorry.
           </p>
           <h2>
             Contact Support at:

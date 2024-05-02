@@ -25,7 +25,11 @@ function ViewSet() {
     }, [setID])
 
     const handleAddCard = () => {
-        axios.post('http://localhost:9000/addCard', { setID, term, definition })
+        axios.post('http://localhost:9000/addCard', {
+            setID, 
+            term, 
+            definition 
+        })
             .then((res) => {
                 if (res.data) {
                     const setValue = { setID };
