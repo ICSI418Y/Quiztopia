@@ -3,31 +3,31 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import Template from './Template.js';
 
-function AddTeacher(){
+function AddStudent(){
 
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const {classID} = useParams();
     
-    const addTeacher = (() => {
-        axios.post('http://localhost:9000/addTeacher', {
+    const addStudent = (() => {
+        axios.post('http://localhost:9000/addStudent', {
             classID : classID,
-            teacherUsername : username
+            studentUsername : username
         })
         .then((res) => {
             alert("Great success! :)");
             navigate(`/viewClass/${classID}`);
         })
         .catch((err) => {
-            alert("ERROR: /addTeacher: " +  err);
+            alert("ERROR: /addStudent: " +  err);
         });
     });
 
-    return (Template("Add Teacher", (
+    return (Template("Add Student", (
       <div className='background'>
         <label>
-          Enter the teacher's username here:
+          Enter the students's username here:
         </label>
         <br/>
         <input
@@ -35,19 +35,19 @@ function AddTeacher(){
           type="text"
           value={username}
           onChange={(e) => {setUsername(e.target.value)}}
-          placeholder="Teacher's username"
+          placeholder="Student's username"
           required
         />
         <br/>
         <button
           type="submit"
-          onClick={addTeacher}
+          onClick={addStudent}
           disabled = {!username}
         >
-          Add Teacher.
+          Add Student.
         </button>
       </div>
     )))
 }
 
-export default AddTeacher;
+export default AddStudent;

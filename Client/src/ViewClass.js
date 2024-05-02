@@ -50,7 +50,7 @@ const ViewClass = () => {
                 alert('ERROR: Student /getUsers: ' + err);
             });
         }
-    }, [studentIDs])
+    }, [studentIDs]);
 
     // Get teacher info
     useEffect(() => {
@@ -63,14 +63,32 @@ const ViewClass = () => {
                 alert('ERROR: Teachers /getUsers: ' + err);
             });
         }
-    }, [teacherIDs])
+    }, [teacherIDs]);
 
-    const removeTeacher = (teacher) => {
-
+    const removeTeacher = (teacherID) => {
+        axios.post('http://localhost:9000/removeTeacher', {
+            classID : classID,
+            teacherID : teacherID,
+        })
+        .then((res) => {
+            setTeacherIDs(res.data);
+        })
+        .catch((err) =>{
+            alert('ERROR: /removeStudent: ' + err)
+        })
     };
 
-    const removeStudent = (student) => {
-
+    const removeStudent = (studentID) => {
+        axios.post('http://localhost:9000/removeStudent', {
+            classID : classID,
+            studentID : studentID,
+        })
+        .then((res) => {
+            setStudentIDs(res.data);
+        })
+        .catch((err) =>{
+            alert('ERROR: /removeStudent: ' + err)
+        })
     };
 
     return Template(title, 
@@ -78,14 +96,15 @@ const ViewClass = () => {
         <p>{description}</p>
         { loggedInUser === ownerID &&
           <>
-            <h2>Teachers: <Link to={`/addTeachers/${classID}`}>Add teachers</Link></h2>
+            <h2>Teachers: <Link to={`/addTeacher/${classID}`}>Add teachers</Link></h2>
             <ul>
               {teachers.map((teacher) => {
                 return (
                     <li>
                       {`${teacher.firstName} ${teacher.lastName} `}
                       <button 
-                        onClick = {removeTeacher(teacher._id)}
+                        type="button"
+                        onClick = {() => removeTeacher(teacher._id)}
                       >Remove teacher</button>
                     </li>
                 )
@@ -95,15 +114,18 @@ const ViewClass = () => {
         }
         { (loggedInUser === ownerID || teacherIDs.indexOf(loggedInUser) !== -1) &&
             <>
-              <h2>Students: <Link to={`/addStudents/${classID}`}>Add students</Link></h2>
+              <h2>Students: <Link to={`/addStudent/${classID}`}>Add students</Link></h2>
               <ul>
                 {students.map((student) => {
                     return (
                         <li>
                           {`${student.firstName} ${student.lastName} `}
-                          <button
-                            onClick = {removeStudent(student)}
-                          >Remove Student</button>
+                            <button
+                              type="button"
+                              onClick = {() => removeStudent(student._id)}
+                            >
+                              Remove Student
+                            </button>
                         </li>
                     )
                 })}

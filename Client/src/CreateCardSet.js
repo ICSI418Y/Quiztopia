@@ -2,23 +2,20 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CreateCardSet.css';
+import Navbar from './NavBar';
 
 const CreateCardSet = () => {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [flashCards, setFlashcards] = useState([]);
-    const [set_id, setId] = useState('');
 
     const {folderID} = useParams();
 
     const handleCreateSet = (event) => {
         event.preventDefault();
-        setFlashcards([]);
         axios.post('http://localhost:9000/createSet', { parent : folderID, title, description })
             .then((res) => {
                 const newSetId = res.data._id
-                setId(newSetId);
                 alert('Set created successfully')
                 navigate(`/viewCardSet/${newSetId}`);
             })
@@ -28,7 +25,8 @@ const CreateCardSet = () => {
     };
 
     return (
-        
+        <div className='background'>
+        <Navbar/>
         <form className='CreateCardSet' onSubmit={(event) => handleCreateSet(event)}>
             <h1>Create Set</h1>
             <div className='title'>
@@ -58,6 +56,8 @@ const CreateCardSet = () => {
             >Create Set</button>
             
         </form>
+        </div>
+        
     );
 };
 

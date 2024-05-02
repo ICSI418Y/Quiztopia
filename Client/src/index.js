@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import reportWebVitals from './reportWebVitals';
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+// import reportWebVitals from './reportWebVitals';
 import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
@@ -20,6 +20,8 @@ import ViewClass from './ViewClass';
 import ViewFolder from './ViewFolder';
 import CreateFolder from './CreateFolder';
 import Help from './Help.js'
+import AddTeacher from './AddTeachers.js';
+import AddStudent from './AddStudent.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -42,6 +44,8 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/viewFolder/:folderID" element={<ViewFolder />} />
       <Route className="navbar-center" path="/createFolder/:folderID" element={<CreateFolder/>}/>
       <Route className='navbar-center' path="/help" element={<Help/>}/>
+      <Route className='navbar-center' path="/addTeacher/:classID" element={<AddTeacher/>}/>
+      <Route className='navbar-center' path="/addStudent/:classID" element={<AddStudent/>}/>
     </>
   )
 );
