@@ -67,11 +67,39 @@ function Home() {
                 <FolderTemplate folderID={folderID} />
               </>
             }
-          </div>
-        </>
-      }
-    </div>
-  );
+
+          </p>
+          {loggedInUser != null &&
+            <>
+              <div>
+                {classes != null && 
+                  <>
+                    <h2>
+                      Classes:
+                    </h2>
+                    <ul>
+                      {classes.map((clase) => {
+                        return(
+                          <li>
+                            <Link to={`/ViewClass/${clase._id}`}>{clase.title}</Link>
+                          </li>
+                        );
+                    })}
+                    </ul>
+                  </>
+                }
+                <h2>
+                  Folders:
+                </h2>
+                {!loading && folderID && 
+                  <>
+                    <FolderTemplate folderID = {folderID}/>
+                  </>
+                }
+              </div>
+            </>
+          }
+        </div>
 }
 
 export default Home;
