@@ -50,7 +50,7 @@ const ViewClass = () => {
                 alert('ERROR: Student /getUsers: ' + err);
             });
         }
-    }, [studentIDs])
+    }, [studentIDs]);
 
     // Get teacher info
     useEffect(() => {
@@ -66,11 +66,29 @@ const ViewClass = () => {
     }, [teacherIDs]);
 
     const removeTeacher = (teacherID) => {
-        //alert("Remove teacher: Unimplemented :/");
+        axios.post('http://localhost:9000/removeTeacher', {
+            classID : classID,
+            teacherID : teacherID,
+        })
+        .then((res) => {
+            setTeacherIDs(res.data);
+        })
+        .catch((err) =>{
+            alert('ERROR: /removeStudent: ' + err)
+        })
     };
 
     const removeStudent = (studentID) => {
-        //alert("reamove student: Unimplemented :/");
+        axios.post('http://localhost:9000/removeStudent', {
+            classID : classID,
+            studentID : studentID,
+        })
+        .then((res) => {
+            setStudentIDs(res.data);
+        })
+        .catch((err) =>{
+            alert('ERROR: /removeStudent: ' + err)
+        })
     };
 
     return Template(title, 
@@ -85,7 +103,8 @@ const ViewClass = () => {
                     <li>
                       {`${teacher.firstName} ${teacher.lastName} `}
                       <button 
-                        onClick = {removeTeacher(teacher._id)}
+                        type="button"
+                        onClick = {() => removeTeacher(teacher._id)}
                       >Remove teacher</button>
                     </li>
                 )
@@ -102,7 +121,8 @@ const ViewClass = () => {
                         <li>
                           {`${student.firstName} ${student.lastName} `}
                             <button
-                            onClick = {removeStudent(student._id)}
+                              type="button"
+                              onClick = {() => removeStudent(student._id)}
                             >
                               Remove Student
                             </button>

@@ -513,7 +513,7 @@ app.post('/addStudent', async (req, res) => {
     try {
         const classID = req.body.classID;
         const username = req.body.studentUsername;
-        console.log("/addTeacher classID: " + classID + " studentUsername: " + username);
+        console.log("/addStudent classID: " + classID + " studentUsername: " + username);
 
         const student = await User.findOne({
             username : username
@@ -593,13 +593,11 @@ app.post('/addTeacher', async (req, res) => {
 })
 
 // - `/removeStudent` - `(req : {classID : Class._id, studentID : [User._id]}, res {})` - UNTESTED
-app.patch('/removeStudent', async (req, res) => {
+app.post('/removeStudent', async (req, res) => {
     try {
         const classID = req.body.classID;
         const studentID = req.body.studentID;
         console.log("/removeStudent classID: " + classID + " studentID: " + studentID);
-
-
 
         // Remove student from roster.
         const classs = await Class.findById(classID);
@@ -616,25 +614,27 @@ app.patch('/removeStudent', async (req, res) => {
         const student = await User.findById(studentID);
 
         let classes = student.classes;
-        const classIndex = students.indexOf(classID);
+        const classIndex = classes.indexOf(classID);
         classes.splice(classIndex, 1);
 
-        await Student.findByIdAndUpdate(studentID, {
+        await User.findByIdAndUpdate(studentID, {
             classes: classes
         })
+
+        return classs.students;
     }
     catch (error) {
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
 
 // - `/removeTeacher` - `(req : {classID : Class._id, studentID : [User._id]}, res {})` - UNTESTED
-app.patch('/removeTeacher', async (req, res) => {
+app.post('/removeTeacher', async (req, res) => {
     try {
         const classID = req.body.classID;
-        const teacherID = req.body.studentID;
-        console.log("/removeTeacher classID: " + classID + " teacherID: " + teacherID);
+        const teacherID = req.body.teacherID;
+        console.log("/removeStudent classID: " + classID + " studentID: " + teacherID);
 
         // Remove student from roster.
         const classs = await Class.findById(classID);
@@ -651,15 +651,17 @@ app.patch('/removeTeacher', async (req, res) => {
         const teacher = await User.findById(teacherID);
 
         let classes = teacher.classes;
-        const classIndex = teachers.indexOf(classID);
+        const classIndex = classes.indexOf(classID);
         classes.splice(classIndex, 1);
 
-        await Student.findByIdAndUpdate(teacherID, {
+        await User.findByIdAndUpdate(teacherID, {
             classes: classes
         })
+
+        return classs.teachers;
     }
     catch (error) {
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 });
