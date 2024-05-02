@@ -56,9 +56,6 @@ function Home() {
                 </ul>
               </>
             }
-            <h2>
-              Folders:
-            </h2>
             {!loading && folderID &&
               <>
                 <FolderTemplate folderID={folderID} />

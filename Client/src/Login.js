@@ -33,6 +33,7 @@ function Login() {
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
   };
+  
   return (
     <div className="background">
       <Navbar/>

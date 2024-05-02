@@ -25,7 +25,7 @@ const CreateCardSet = () => {
     };
 
     return (
-        <>
+        <div className='background'>
         <Navbar/>
         <form className='CreateCardSet' onSubmit={(event) => handleCreateSet(event)}>
             <h1>Create Set</h1>
@@ -56,7 +56,7 @@ const CreateCardSet = () => {
             >Create Set</button>
             
         </form>
-        </>
+        </div>
         
     );
 };

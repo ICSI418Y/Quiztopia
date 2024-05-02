@@ -52,8 +52,8 @@ function ViewSet() {
         <div className='background'>
             <Navbar/>
             <h1>{set.title}</h1>
-            <p>{set.description}</p>
-            <h2>Cards <Link to="/home">Home</Link></h2>
+            <h3>{set.description}</h3>
+            <h2>Cards:</h2>
             <ul>
                 {flashcards.map((card) => (
                     <li key={card._id}>
@@ -61,18 +61,33 @@ function ViewSet() {
                     </li>
                 ))}
             </ul>
-            <h2>Add Card</h2>
+            <h2>Add Card:</h2>
             <label>
                 Term:
-                <input type="text" value={term} onChange={(e) => setTerm(e.target.value)} />
+                <input 
+                  type="text" 
+                  value={term} 
+                  onChange={(e) => setTerm(e.target.value)} 
+                />
             </label>
+            <br/>
             <label>
                 Definition:
-                <input type="text" value={definition} onChange={(e) => setDefinition(e.target.value)} />
+                <input 
+                  type="text" 
+                  value={definition} 
+                  onChange={(e) => setDefinition(e.target.value)} 
+                />
             </label>
-            <button className='loginButtonSpacing' onClick={handleAddCard}>Add Card</button>
+            <br/>
+            <button 
+              className='loginButtonSpacing' 
+              onClick={handleAddCard}
+            >
+              Add Card
+            </button>
             <br />
-             <Link to={`/ReviewSet/${setID}`}>Review Set</Link>
+            <Link to={`/ReviewSet/${setID}`}>Review Set</Link>
         </div>
     );
 }
