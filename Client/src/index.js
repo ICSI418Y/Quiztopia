@@ -19,6 +19,7 @@ import CreateClass from './CreateClass';
 import ViewClass from './ViewClass';
 import ViewFolder from './ViewFolder';
 import CreateFolder from './CreateFolder';
+import Help from './Help.js'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
       <Route className="navbar-center" path="/viewClass/:classID" element={<ViewClass />} />
       <Route className="navbar-center" path="/viewFolder/:folderID" element={<ViewFolder />} />
       <Route className="navbar-center" path="/createFolder/:folderID" element={<CreateFolder/>}/>
+      <Route className='navbar-center' path="/help" element={<Help/>}/>
     </>
   )
 );

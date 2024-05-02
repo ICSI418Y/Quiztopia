@@ -57,6 +57,7 @@ function Home(){
                 <button onClick={(handleLogout)}>Logout</button>
               </>
             }
+            <Link to='/help'>Help Desk</Link>
           </p>
           {loggedInUser != null &&
             <>
