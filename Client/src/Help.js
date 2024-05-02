@@ -1,38 +1,31 @@
 const Help = () =>{
     return(
-        <div>
-        <form>
-            <label>
+        <div className='background'>
+          <h1>
             Help
-            </label>
-            <br/>
-            <br/>
-            <label>
+          </h1>
+          <h2>
             Commonly asked questions
-            </label>
-            <br/>
-            <label>
+          </h2>
+          <p>
             Q: If I delete a folder, does it delete all of the folders beneath it
-            <br/>
+          <br/>
             A: Yes, if you want to save info from any child folders copy them and move them somewhere else first
-            </label>
-            <br/>
-            <br/>
-            <label>
+          </p>
+          <p>
             Q: I accidently deleted a folder that contained everything, can I get it back
-            <br/>
+          <br/>
             A: No, sorry
-            </label>
-            <br/>
-            <br/>
-            <label>
+          </p>
+          <h2>
             Contact Support at:
-            Phone number:(123)-456-7890
-            Email: quiztopia@quiz.com
-            </label>
-            <br/>
-            </form>
-            </div>
+          </h2>
+          <ul>
+            <li>Phone number:(123)-456-7890</li>
+            <li>Email: quiztopia@quiz.com</li>
+          </ul>            
+          <br/>
+        </div>
     )
 }
 export default Help;
