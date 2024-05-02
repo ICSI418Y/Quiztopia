@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './index.css';
 import './App.css';
+import Navbar from "./NavBar";
 
 function CreateFolder(){
     const navigate = useNavigate();
@@ -28,14 +29,15 @@ function CreateFolder(){
 
     return (
         <div className="background">
-        <h1>Create New Folder!</h1>
-        <form className="center">
-        Title:
-        <input className="inputBoxSizes" value={title} onChange={(e) => {setTitle(e.target.value)}} />
-        <br />
-        <button className="loginButtonSpacing" disabled={!(title)} onClick={handleCreateFolder} type="submit">submit</button>
-        </form>
-    </div>
+          <Navbar/>
+          <h1>Create New Folder!</h1>
+          <form className="center">
+            Title:
+            <input className="inputBoxSizes" value={title} onChange={(e) => {setTitle(e.target.value)}} />
+            <br />
+            <button className="loginButtonSpacing" disabled={!(title)} onClick={handleCreateFolder} type="submit">submit</button>
+          </form>
+        </div>
     );
 }
 
