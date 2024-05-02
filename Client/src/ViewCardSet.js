@@ -4,10 +4,6 @@ import axios from 'axios';
 import './App.css';
 import Navbar from './NavBar';
 
-// const generateId = () => {
-//     return new ObjectId().toString();
-// };
-
 function ViewSet() {
     const [set, setSet] = useState("");
     const [flashcards, setFlashcards] = useState([]);
@@ -18,7 +14,6 @@ function ViewSet() {
 
     useEffect(() => {
         const setValue = { setID };
-        //console.log(JSON.stringify(setValue))
         axios.get('http://localhost:9000/getSet', { params: setValue })
             .then((res) => {
                 setSet(res.data.set);
