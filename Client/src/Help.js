@@ -1,6 +1,9 @@
+import Navbar from './NavBar';
+
 const Help = () =>{
     return(
         <div className='background'>
+            <Navbar/>
           <h1>
             Help
           </h1>

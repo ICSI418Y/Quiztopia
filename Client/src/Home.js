@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 //import Template from './Template';
 import './App.css';
@@ -40,7 +40,6 @@ function Home() {
 
       {loggedInUser != null &&
         <>
-          <div>
             {classes != null &&
               <>
                 <h2>
@@ -57,8 +56,6 @@ function Home() {
                 </ul>
               </>
             }
-
-
             <h2>
               Folders:
             </h2>
@@ -67,39 +64,10 @@ function Home() {
                 <FolderTemplate folderID={folderID} />
               </>
             }
-
-          </p>
-          {loggedInUser != null &&
-            <>
-              <div>
-                {classes != null && 
-                  <>
-                    <h2>
-                      Classes:
-                    </h2>
-                    <ul>
-                      {classes.map((clase) => {
-                        return(
-                          <li>
-                            <Link to={`/ViewClass/${clase._id}`}>{clase.title}</Link>
-                          </li>
-                        );
-                    })}
-                    </ul>
-                  </>
-                }
-                <h2>
-                  Folders:
-                </h2>
-                {!loading && folderID && 
-                  <>
-                    <FolderTemplate folderID = {folderID}/>
-                  </>
-                }
-              </div>
-            </>
+        </>
           }
         </div>
+      )
 }
 
 export default Home;

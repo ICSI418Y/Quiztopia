@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
+import Navbar from './NavBar';
 
 // const generateId = () => {
 //     return new ObjectId().toString();
@@ -26,7 +27,7 @@ function ViewSet() {
             .catch((err) => {
                 alert("Error getting set: " + err);
             })
-    }, [])
+    }, [setID])
 
     const handleAddCard = () => {
         axios.post('http://localhost:9000/addCard', { setID, term, definition })
@@ -54,6 +55,7 @@ function ViewSet() {
 
     return (
         <div className='background'>
+            <Navbar/>
             <h1>{set.title}</h1>
             <p>{set.description}</p>
             <h2>Cards <Link to="/home">Home</Link></h2>

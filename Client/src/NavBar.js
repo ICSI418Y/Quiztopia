@@ -4,20 +4,13 @@ import { useNavigate, Link } from 'react-router-dom';
 const Navbar = () => {
   const loggedInUser = localStorage.getItem('loggedInUser')
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
   const [folderID, setFolderID] = useState("");
-  const [classes, setClasses] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (loggedInUser != null) {
       axios.post('http://localhost:9000/getUser', { userID: loggedInUser })
         .then((res) => {
-          setUsername(res.data.username);
           setFolderID(res.data.folder);
-          setLoading(false);
-          if (res.data.classes)
-            setClasses(res.data.classes);
         })
         .catch((err) => {
           alert("/getUser: " + err);
@@ -45,6 +38,7 @@ const Navbar = () => {
           <button onClick={(handleLogout)}>Logout</button>
         </>
       }
+      <Link to='/help'>Tech Support</Link>
     </p>
 
   )
