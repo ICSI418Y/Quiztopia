@@ -1,6 +1,6 @@
 # Description
 
-// TODO
+This is a flashcard memorization site and our final project for ICSI 418y. It allows users to create and study their own flashcard sets, as well as create and maintain classes to easily share sets.
 
 # Implementation:
 
@@ -45,31 +45,13 @@
 - Create `/DeleteAccount` - Create a page that allows the user to delete their account. Make sure they can't do it on accident, and that they cannot delete other users.
 - When other teammates mark their pages as done, implement conditional rendering on the required features.
 
-
-# Completed Pages:
-
-PAGE NAME | OWNER | FUNCTIONALITY DONE | USER AUTHENTICATION DONE | GRAPHIC DESIGN DONE |
-:--- | :---: | :---: |:---: |:---: |
-`/Signup` | Mendel | X | X | X |
-`/Login` | Mendel | X | X | X |
-`/DeleteAccount` | Mendel | X | X | X |
-`/CreateSet` | Danica | X | X | X |
-`/ViewSet` | Danica | X | X | X |
-`/ReviewSet` | Danica | X | X | X |
-`/PraciceTestSet` | Danica | X | X | X |
-`/TestSet` | Danica | X | X | X |
-`/ViewFolder` | Matthew | X | X | X |
-`/CreateClass` | Matthew | X | X | X |
-`/ViewClass` | Matthew | X | X | X |
-`/EditClass` | Matthew | X | X | X |
-
 # How to use:
 
 If everything is set up correctly, you should be able to call `npm start` from the `./quiztopia` directory, and `node index.js` from the `./Server` directory. This should open port 3000 for sending and receiving the client-side information, and port 9000 for sending and receiving server side information.
 
 ## Dependencies:
 
-### quiztopia/
+### Client/
 
 We used the default packages provided by `npx create-react-app quiztopia`, as well as Bootstrap, Axios, React Router Dom, and React Select (imported with `npm i --save bootstrap axios react-router-dom react-select`).
 
