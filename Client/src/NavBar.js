@@ -22,6 +22,7 @@ const Navbar = () => {
     localStorage.clear()
     navigate("/Home");
   }
+  
   return (
     <p className='navbar-center'>
       {loggedInUser == null &&

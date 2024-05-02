@@ -101,9 +101,11 @@ const ViewClass = () => {
                     return (
                         <li>
                           {`${student.firstName} ${student.lastName} `}
-                          <button
+                            <button
                             onClick = {removeStudent(student._id)}
-                          >Remove Student</button>
+                            >
+                              Remove Student
+                            </button>
                         </li>
                     )
                 })}
