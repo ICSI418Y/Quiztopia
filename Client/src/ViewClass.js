@@ -63,14 +63,14 @@ const ViewClass = () => {
                 alert('ERROR: Teachers /getUsers: ' + err);
             });
         }
-    }, [teacherIDs])
+    }, [teacherIDs]);
 
-    const removeTeacher = (teacher) => {
-
+    const removeTeacher = (teacherID) => {
+        //alert("Remove teacher: Unimplemented :/");
     };
 
-    const removeStudent = (student) => {
-
+    const removeStudent = (studentID) => {
+        alert("reamove student: Unimplemented :/");
     };
 
     return Template(title, 
@@ -78,7 +78,7 @@ const ViewClass = () => {
         <p>{description}</p>
         { loggedInUser === ownerID &&
           <>
-            <h2>Teachers: <Link to={`/addTeachers/${classID}`}>Add teachers</Link></h2>
+            <h2>Teachers: <Link to={`/addTeacher/${classID}`}>Add teachers</Link></h2>
             <ul>
               {teachers.map((teacher) => {
                 return (
@@ -95,14 +95,14 @@ const ViewClass = () => {
         }
         { (loggedInUser === ownerID || teacherIDs.indexOf(loggedInUser) !== -1) &&
             <>
-              <h2>Students: <Link to={`/addStudents/${classID}`}>Add students</Link></h2>
+              <h2>Students: <Link to={`/addStudent/${classID}`}>Add students</Link></h2>
               <ul>
                 {students.map((student) => {
                     return (
                         <li>
                           {`${student.firstName} ${student.lastName} `}
                           <button
-                            onClick = {removeStudent(student)}
+                            onClick = {removeStudent(student._id)}
                           >Remove Student</button>
                         </li>
                     )
