@@ -11,7 +11,6 @@ function AddTeacher(){
     const {classID} = useParams();
     
     const addTeacher = (() => {
-        // Get userID
         axios.post('http://localhost:9000/addTeacher', {
             classID : classID,
             teacherUsername : username
