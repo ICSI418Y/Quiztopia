@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './App.css';
+import Navbar from './NavBar';
 
 const ReviewSet = () => {
     const navigate = useNavigate();
@@ -69,6 +70,7 @@ const ReviewSet = () => {
 
     return (
         <div className='background'>
+            <Navbar />
             <h1>Review Set: {set.title}</h1>
             <p>{set.description}</p>
             <div className='center'>
