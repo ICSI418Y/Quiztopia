@@ -20,7 +20,7 @@ const Navbar = () => {
   const handleLogout = (event) => {
     event.preventDefault()
     localStorage.clear()
-    navigate("/Login");
+    navigate("/Home");
   }
   return (
     <p className='navbar-center'>

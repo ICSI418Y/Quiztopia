@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import './App.css';
 import { useNavigate } from "react-router";
+import Navbar from "./NavBar";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -34,7 +35,9 @@ function SignUp() {
 
     
   };
-  return (<div className="background">
+  return (
+  <div className="background">
+    <Navbar/>
     <h1>Sign Up</h1>
     <form className="center">
       Username
@@ -65,7 +68,7 @@ function SignUp() {
       className="createAccountButtonSpacing" 
       disabled={!(username && firstName && lastName && password && passwordRepeat && passwordRepeat === password)} 
       onClick={handleSignUp} t
-      ype="submit">submit</button>
+      type="submit">Signup!</button>
   </div>)
 }
 

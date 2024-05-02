@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './Login.css';
+import Navbar from "./NavBar";
 
 function Login() {
   const navigate = useNavigate();
@@ -32,19 +33,37 @@ function Login() {
       // TODO: maybe have better errors.
       .catch((_) => alert('Error in Login'));
   };
-  return (<form className="Login">
-    <h1>Login</h1>
-      <div className="usr">
-      <label><b>Username:</b></label>
-      <input value={username} onChange={(e) => {setUsername(e.target.value)}} />
-      <br />
-      <div className="psw"></div>
-        <label><b>Password:</b></label>
-        <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
-      </div>
-      <br />
-    <button className="submit" disabled={!(username && password)} onClick={handleLogin} type="submit">submit</button>
-  </form>)
+  return (
+    <div className="background">
+      <Navbar/>
+      <form className="Login">
+        <h1>Login</h1>
+          <div className="usr">
+          <label><b>Username:</b></label>
+          <input 
+            value={username} 
+            onChange={(e) => {setUsername(e.target.value)}}
+          />
+          <br/>
+          <div className="psw"></div>
+            <label><b>Password:</b></label>
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(e) => {setPassword(e.target.value)}}
+            />
+          </div>
+          <br/>
+        <button 
+          className="submit" 
+          disabled={!(username && password)} 
+          onClick={handleLogin} 
+          type="submit"
+        >
+          Login!
+        </button>
+      </form>
+    </div>)
 }
 
 export default Login;
