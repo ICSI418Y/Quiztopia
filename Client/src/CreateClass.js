@@ -24,7 +24,7 @@ import './App.css';
             })
             .then((res) => {
                 if (res.data){
-                    alert("Great success! :) " + res.data);
+                    alert("Great success! :)");
                     navigate(`/viewClass/${res.data._id}`);
                 }
                 else
