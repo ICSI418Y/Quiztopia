@@ -70,7 +70,7 @@ const ViewClass = () => {
     };
 
     const removeStudent = (studentID) => {
-        alert("reamove student: Unimplemented :/");
+        //alert("reamove student: Unimplemented :/");
     };
 
     return Template(title, 

@@ -509,34 +509,43 @@ app.post('/getClass', async (req, res) => {
 })
 
 // - `/addStudent` - `(classID : Class._id, studentID : User._id)` - UNTESTED
-app.patch('/addStudent', async (req, res) => {
+app.post('/addStudent', async (req, res) => {
     try {
         const classID = req.body.classID;
-        const studentID = req.body.studentID;
-        console.log("/addStudent classID: " + classID + " studentID: " + studentID);
+        const username = req.body.studentUsername;
+        console.log("/addTeacher classID: " + classID + " studentUsername: " + username);
 
-        // Remove student from roster.
-        const classs = await Class.findById(classID);
-
-        let students = classs.students;
-        students.push(studentID);
-
-        await Class.findByIdAndUpdate(classID, {
-            students: students
+        const student = await User.findOne({
+            username : username
         })
 
-        // Remove class from student's class list.
-        const student = await User.findById(studentID);
+        if (student != null){
+            const clase = await Class.findById(classID);
 
-        let classes = student.classes;
-        classes.push(classID);
+            // Add teacher to class
+            let students = clase.students;
+            students.push(student._id);
 
-        await Student.findByIdAndUpdate(studentID, {
-            classes: classes
-        })
+            await Class.findByIdAndUpdate(classID, {
+                students: students
+            })
+
+            // Add class to teacher
+            let classes = student.classes;
+            classes.push(classID);
+
+            await User.findByIdAndUpdate(student._id, {
+                classes: classes
+            })
+            res.send(student);
+        }
+        else{
+            console.log("Teacher " + username + " not found")
+            res.status(404)
+        }
     }
     catch (error) {
-        res.status().send(error);
+        res.status(500).send(error);
         console.log(error);
     }
 })
