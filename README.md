@@ -1,6 +1,6 @@
 # Description
 
-// TODO
+This Quiztopia web app project that we created is a version of the Quizlet website.
 
 # Implementation:
 
